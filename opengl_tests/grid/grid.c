@@ -9,12 +9,12 @@ void createGrid(int rows, int cols, int tile_len, int origin[]) {
   int r;
   int c;
   // Rows
-  for (int r = 0; r < rows + 1; r++) {
+  for (r = 0; r < rows + 1; r++) {
     glVertex2f(origin[0], origin[1] + (tile_len * r));
     glVertex2f(origin[0] + (cols * tile_len), origin[1] + (tile_len * r));
   }
   // Cols
-  for (int c = 0; c < cols + 1; c++) {
+  for (c = 0; c < cols + 1; c++) {
     glVertex2f(origin[0] + (tile_len * c), origin[1]);
     glVertex2f(origin[0] + (tile_len * c), origin[1] + (rows * tile_len));
   }
