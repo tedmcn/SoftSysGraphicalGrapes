@@ -11,6 +11,7 @@ Our goals for this project are focused around generating graphics procedurally. 
 Our MVP implementation is an endless maze that is continuously generated following a set of predetermined algorithms.  Maze characteristics will include always having a successful route to the exit confirmed using DFS and having cellular automata behaviors that define how the new blocks are generated at each step.
 
 **Stretch Goals**
+
 Make the maze game unique and fun to play in some way.  Possible ideas include you can only turn left, you can only go backwards, it teases you with the end of the maze but you can never reach it.  Extend the initial maze to implement another characteristic procedurally.  This could be color, texture, depth, or other factors.
 
 ## Resources
