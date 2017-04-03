@@ -19,9 +19,8 @@
 
 
 //Create the sphere and plane globally since they are needed throughout the whole simulation
-    Sphereobject s= Sphereobject(1);
     float plane_normal[]={0,1,0};
-    float plane_scale[]={10,.1,10};
+    float plane_scale[]={100,.1,100};
     float plane_rotate[]={0,0,0};
     Planeobject plane=Planeobject(plane_normal, plane_scale, plane_rotate);
     Physics p;
@@ -55,13 +54,13 @@ static void display(void)
     glLoadIdentity();
 
     //Set the camera
-    gluLookAt(14,15,15,0.0,0.0,0.0,0.0,1.0,0.0);
+    //First set of 3 is coords of eye, second set of 3 is where it is looking, 3rd is normal
+    gluLookAt(0,10,1,1,10,1,0.0,1.0,0.0);
 
     //Draw in red
     glColor3d(1,0,0);
 
     //Draw the sphere
-    s.draw();
 
     //Draw in blue
     glColor3d(0,0,0.2); 
@@ -73,7 +72,6 @@ static void display(void)
     p.update();
 
     //Update the sphere object
-    s.apply(p,plane);
 
 
     //Send the new image to the buffer
@@ -108,7 +106,6 @@ int main(int argc, char *argv[])
     GLfloat plane_coordinates[] = {0,0,0};
 
     //Put the sphere and plane in the correct position
-    s.setP(sphere_coordinates);
     plane.setP(plane_coordinates);
 
     //Create the window
