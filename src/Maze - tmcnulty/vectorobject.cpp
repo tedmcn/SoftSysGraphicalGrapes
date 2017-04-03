@@ -66,6 +66,7 @@ bool Vectorobject::add(Vectorobject v){
     coordinates[0]=coordinates[0]+v.coordinates[0];
     coordinates[1]=coordinates[1]+v.coordinates[1];
     coordinates[2]=coordinates[2]+v.coordinates[2];
+    return true;
 }
 
 //Averages two different vectors
