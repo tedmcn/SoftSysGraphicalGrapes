@@ -62,6 +62,12 @@ void Vectorobject::set(float* c){
     coordinates[2]=c[2];
 }
 
+bool Vectorobject::add(Vectorobject v){
+    coordinates[0]=coordinates[0]+v.coordinates[0];
+    coordinates[1]=coordinates[1]+v.coordinates[1];
+    coordinates[2]=coordinates[2]+v.coordinates[2];
+}
+
 //Averages two different vectors
 //
 //The average of {0,1,0} and {1,0,0} (a vector going straigh up and straight 

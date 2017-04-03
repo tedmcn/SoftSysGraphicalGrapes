@@ -23,6 +23,7 @@ public:
 
     float* get();
     void set(float* c);
+    bool add(Vectorobject v);
     
 
 protected:
