@@ -9,6 +9,7 @@
 #define playerobject_h
 
 #include "gameobject.h"
+#include "vectorobject.h"
 
 class Playerobject : public Gameobject{
 
@@ -25,6 +26,7 @@ public:
 
 protected:
 	
+	Vectorobject d[3];	//Direction
 };
 
 

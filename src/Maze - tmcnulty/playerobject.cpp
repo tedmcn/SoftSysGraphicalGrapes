@@ -2,7 +2,7 @@
 
 //Constructor
 Playerobject::Playerobject(){
-
+	
 }
 //Deconstructor
 Playerobject::~Playerobject(){
