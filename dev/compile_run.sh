@@ -1,0 +1,1 @@
+clear && clear && make && ./flat

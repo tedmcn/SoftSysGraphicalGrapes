@@ -5,8 +5,10 @@
  *Header for playerobject
 */
 
- #ifndef playerobject_h
- #define playerobject_h
+#ifndef playerobject_h
+#define playerobject_h
+
+#include "gameobject.h"
 
 class Playerobject : public Gameobject{
 
@@ -26,4 +28,4 @@ protected:
 };
 
 
- #endif
+#endif		

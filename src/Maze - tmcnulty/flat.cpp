@@ -16,14 +16,19 @@
 #include "physics.h"
 #include "sphereobject.h"
 #include "planeobject.h"
+#include "playerobject.h"
 
 
 //Create the sphere and plane globally since they are needed throughout the whole simulation
-    float plane_normal[]={0,1,0};
-    float plane_scale[]={100,.1,100};
-    float plane_rotate[]={0,0,0};
-    Planeobject plane=Planeobject(plane_normal, plane_scale, plane_rotate);
-    Physics p;
+float plane_normal[]={0,1,0};
+float plane_scale[]={100,.1,100};
+float plane_rotate[]={0,0,0};
+Planeobject plane=Planeobject(plane_normal, plane_scale, plane_rotate);
+Physics p;
+
+//Player object which will work as the camera and take user input
+float player_starting_coords[]={0,10,1};
+Playerobject player;
 
 
 //Used for resizing the window if it changes
@@ -55,7 +60,7 @@ static void display(void)
 
     //Set the camera
     //First set of 3 is coords of eye, second set of 3 is where it is looking, 3rd is normal
-    gluLookAt(0,10,1,1,10,1,0.0,1.0,0.0);
+    player.look();
 
     //Draw in red
     glColor3d(1,0,0);
@@ -94,7 +99,11 @@ static void display(void)
  
 int main(int argc, char *argv[])
 {
-   
+    player = Playerobject();
+    player.setP(player_starting_coords);
+
+
+
     //Start opengl, Create the window
     glutInit(&argc, argv);
     glutInitWindowSize(640,480);
