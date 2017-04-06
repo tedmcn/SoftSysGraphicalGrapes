@@ -20,7 +20,7 @@ int up_tr = 0;
 int up_max = 0;
 
 // List of tiles
-int coord[][];
+//int coords[][];
 
 /*
  * Generate a new row of the maze using procedural parameters
@@ -31,7 +31,6 @@ int coord[][];
  */
 void generateRow(float frequency, float separation) {
   // Update tile list
-  y = current_rows;
 
   current_rows++;
 }
@@ -44,7 +43,9 @@ void display(void)
 {
   glClear( GL_COLOR_BUFFER_BIT );
   drawGrid(board_size, board_size, tile_size, origin);
-  drawTiles(coord, tile_size, origin);
+
+  // Loop through drawing each coord in coords
+  //drawTile(coord, tile_size, origin);
 
   glFlush();
 }

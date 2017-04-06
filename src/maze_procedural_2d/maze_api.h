@@ -7,4 +7,4 @@
 #include <GL/glut.h>
 
 void drawGrid(int rows, int cols, int tile_len, int origin[]);
-void drawTiles(int coord[][], int tile_len, int origin[]);
+void drawTiles(int coord[], int tile_len, int origin[]);
