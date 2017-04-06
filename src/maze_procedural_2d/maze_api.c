@@ -27,44 +27,28 @@ void drawGrid(int rows, int cols, int tile_len, int origin[]) {
 
 
 /*
- * Draw a tile at the given coord in the board
+ * Draw tiles from list of coords at the given coords in the board
  * Reference from bottom left corner
  *
  * INPUT: coord is row and column indexing from 0 and bottom left corner
  */
-void drawTile(int coord[], int tile_len, int origin[]) {
-  // Bottom left corner (x, y) of square
-  int x = (tile_len * coord[0]) + origin[0];
-  int y = (tile_len * coord[1]) + origin[1];
-
+void drawTiles(int coord[], int tile_len, int origin[]) {
   // Fill in grid square
   glColor3f(0.0, 0.0, 1.0);
   glBegin(GL_POLYGON);
-  glVertex2f(x, y);
-  glVertex2f(x + tile_len, y);
-  glVertex2f(x + tile_len, y + tile_len);
-  glVertex2f(x, y + tile_len);
+
+  // Draw the list of tiles
+  int i;
+  for (i = 0; i < sizeof(coord); i++) {
+    // Bottom left corner (x, y) of square
+    int x = (tile_len * coord[0]) + origin[0];
+    int y = (tile_len * coord[1]) + origin[1];
+
+    glVertex2f(x, y);
+    glVertex2f(x + tile_len, y);
+    glVertex2f(x + tile_len, y + tile_len);
+    glVertex2f(x, y + tile_len);
+  }
+
   glEnd();
-}
-
-
-/*
- * Add a row to the grid
- * 
- * INPUT: side - -1 is left and +1 is right
- * UPDATE: num rows and cols, origin  
- */
-int addRow(int *row_num, int *col_num, int tile_len, int side, int *origin[]) {
-  // TODO
-}
-
-
-/*
- * Add a column to the grid
- * 
- * INPUT: side - -1 is left and +1 is right
- * UPDATE: num rows and columns, origin
- */
-int addCol(int *row_num, int *col_num, int tile_len, int side, int *origin[]) {
-  // TODO
 }

@@ -4,6 +4,10 @@
 
 #include "maze_api.h"
 
+// Procedural Parameters
+float frequency = 0.5;
+float separation = 0.5;
+
 // Set the side length of the initial board
 int board_size = 10;
 int tile_size = 25;
@@ -12,14 +16,24 @@ int current_rows = 10;
 int current_cols = 10;
 int origin[2] = {10, 10};
 
+int up_tr = 0;
+int up_max = 0;
+
+// List of tiles
+int coord[][];
+
 /*
  * Generate a new row of the maze using procedural parameters
  * 
- * INPUT: frequency - 0-1.0 percentage of tiles filled per row,
+ * INPUT: direction - 0 up, 1, down, 2 left, 3 right
+ *        frequency - 0-1.0 percentage of tiles filled per row,
  *        separation - 0-1.0 factor of space between tiles  
  */
 void generateRow(float frequency, float separation) {
-  // TODO
+  // Update tile list
+  y = current_rows;
+
+  current_rows++;
 }
 
 
@@ -30,8 +44,8 @@ void display(void)
 {
   glClear( GL_COLOR_BUFFER_BIT );
   drawGrid(board_size, board_size, tile_size, origin);
-  int coord[] = {2, 2};
-  drawTile(coord, tile_size, origin);
+  drawTiles(coord, tile_size, origin);
+
   glFlush();
 }
 
@@ -40,6 +54,7 @@ void display(void)
  * WASD User Motion
  */
 void processKeys(unsigned char key, int x, int y) {
+  // Check keys
   switch(key) {
     // ESC
     case 27:
@@ -47,10 +62,12 @@ void processKeys(unsigned char key, int x, int y) {
     case 'w':
       // move up
       glTranslatef(0.0, -1.0, 0.0);
+      up_tr++;
       break;
     case 's':
       // move down
       glTranslatef(0.0, 1.0, 0.0);
+      up_tr--;
       break;
     case 'a':
       // move left
@@ -63,6 +80,14 @@ void processKeys(unsigned char key, int x, int y) {
     default:
       break;
   }
+
+  // Check generate trigger
+  if (up_tr == up_max + tile_size) {
+    up_max += tile_size;
+    generateRow(frequency, separation);
+  }
+
+  // Update view
   glutPostRedisplay();
 }
 
