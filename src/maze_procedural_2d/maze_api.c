@@ -4,7 +4,10 @@
 
 #include "maze_api.h"
 
-void createGrid(int rows, int cols, int tile_len, int origin[]) {
+/*
+ * Draw a grid
+ */
+void drawGrid(int rows, int cols, int tile_len, int origin[]) {
   glColor3f(0.0, 1.0, 0.0);
   glBegin(GL_LINES);
   int r;
@@ -22,13 +25,46 @@ void createGrid(int rows, int cols, int tile_len, int origin[]) {
   glEnd();
 }
 
-void createTile(int coord[], int side_len) {
+
+/*
+ * Draw a tile at the given coord in the board
+ * Reference from bottom left corner
+ *
+ * INPUT: coord is row and column indexing from 0 and bottom left corner
+ */
+void drawTile(int coord[], int tile_len, int origin[]) {
+  // Bottom left corner (x, y) of square
+  int x = (tile_len * coord[0]) + origin[0];
+  int y = (tile_len * coord[1]) + origin[1];
+
   // Fill in grid square
   glColor3f(0.0, 0.0, 1.0);
   glBegin(GL_POLYGON);
-  glVertex2f(coord[0], coord[1]);
-  glVertex2f(coord[0] + side_len, coord[1]);
-  glVertex2f(coord[0] + side_len, coord[1] + side_len);
-  glVertex2f(coord[0], coord[1] + side_len);
+  glVertex2f(x, y);
+  glVertex2f(x + tile_len, y);
+  glVertex2f(x + tile_len, y + tile_len);
+  glVertex2f(x, y + tile_len);
   glEnd();
+}
+
+
+/*
+ * Add a row to the grid
+ * 
+ * INPUT: side - -1 is left and +1 is right
+ * UPDATE: num rows and cols, origin  
+ */
+int addRow(int *row_num, int *col_num, int tile_len, int side, int *origin[]) {
+  // TODO
+}
+
+
+/*
+ * Add a column to the grid
+ * 
+ * INPUT: side - -1 is left and +1 is right
+ * UPDATE: num rows and columns, origin
+ */
+int addCol(int *row_num, int *col_num, int tile_len, int side, int *origin[]) {
+  // TODO
 }

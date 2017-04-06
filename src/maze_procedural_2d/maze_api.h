@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 
-
-void createGrid(int rows, int cols, int tile_len, int origin[]) {
-void createTile(int coord[], int side_len);
+void drawGrid(int rows, int cols, int tile_len, int origin[]);
+void drawTile(int coord[], int tile_len, int origin[]);
+int addRow(int *row_num, int *col_num, int tile_len, int side, int *origin[]);
+int addCol(int *row_num, int *col_num, int tile_len, int side, int *origin[]);
