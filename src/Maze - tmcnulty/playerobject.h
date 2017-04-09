@@ -24,9 +24,13 @@ public:
 	//Check for user input to turn or move forward
 	bool checkForInput();
 
+	//Direction represented with a vector
+	void setD(float* direction);
+	Vectorobject getD();
+
 protected:
 	
-	Vectorobject d[3];	//Direction
+	Vectorobject d;	//Direction
 };
 
 

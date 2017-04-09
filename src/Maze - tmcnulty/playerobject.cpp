@@ -2,7 +2,7 @@
 
 //Constructor
 Playerobject::Playerobject(){
-	
+
 }
 //Deconstructor
 Playerobject::~Playerobject(){
@@ -16,4 +16,26 @@ void Playerobject::look(){
 
 bool Playerobject::checkForInput(){
 	return false;
+}
+
+//***********************************************************************//
+//VELOCITY
+//***********************************************************************//
+
+
+//Set the direction of the object
+//
+//direction : pointer to float array representing Velocity vector
+void Gameobject::setD(float* direction){
+	//Load the velocity into a vector object
+	Vectorobject direction_vector = Vectorobject(direction);
+	//Save it
+	d = direction_vector;
+}
+
+//Read the velocity of the object
+//
+//Returns velocity
+Vectorobject Gameobject::getD(){
+	return d;
 }
