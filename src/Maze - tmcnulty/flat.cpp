@@ -28,6 +28,7 @@ Physics p;
 
 //Player object which will work as the camera and take user input
 float player_starting_coords[]={0,10,1};
+float player_starting_direction[]={1,0,0};
 Playerobject player;
 
 
@@ -101,6 +102,7 @@ int main(int argc, char *argv[])
 {
     player = Playerobject();
     player.setP(player_starting_coords);
+    player.setD(player_starting_direction);
 
 
 

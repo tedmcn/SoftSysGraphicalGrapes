@@ -11,7 +11,7 @@ Playerobject::~Playerobject(){
 
 void Playerobject::look(){
 	// printf("%f - %f - %f ",getP()[0],getP()[1],getP()[2]);
-    gluLookAt(getP()[0],getP()[1],getP()[2],1,10,1,0.0,1.0,0.0);
+    gluLookAt(getP()[0],getP()[1],getP()[2],getP()[0]+getD().get()[0],getP()[1]+getD().get()[1],getP()[2]+getD().get()[2],0.0,1.0,0.0);
 }
 
 bool Playerobject::checkForInput(){
@@ -26,7 +26,7 @@ bool Playerobject::checkForInput(){
 //Set the direction of the object
 //
 //direction : pointer to float array representing Velocity vector
-void Gameobject::setD(float* direction){
+void Playerobject::setD(float* direction){
 	//Load the velocity into a vector object
 	Vectorobject direction_vector = Vectorobject(direction);
 	//Save it
@@ -36,6 +36,6 @@ void Gameobject::setD(float* direction){
 //Read the velocity of the object
 //
 //Returns velocity
-Vectorobject Gameobject::getD(){
+Vectorobject Playerobject::getD(){
 	return d;
 }
