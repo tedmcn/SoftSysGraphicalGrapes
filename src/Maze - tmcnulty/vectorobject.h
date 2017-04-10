@@ -23,8 +23,10 @@ public:
 
     float* get();
     void set(float* c);
+    
     bool add(Vectorobject v);
     
+    Vectorobject distribute();
 
 protected:
     

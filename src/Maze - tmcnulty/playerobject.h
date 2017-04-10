@@ -23,6 +23,11 @@ public:
 
 	//Check for user input to turn or move forward
 	bool checkForInput();
+	
+	//Handel the input for the current user, move the user forward
+	//based on their acceleration/velocity and fix clipping through
+	//walls
+	bool handelInput();
 
 	//Direction represented with a vector
 	void setD(float* direction);

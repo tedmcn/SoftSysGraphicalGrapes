@@ -83,3 +83,12 @@ Vectorobject Vectorobject::average(Vectorobject v){
     Vectorobject new_v = Vectorobject(coords);
     return new_v;
 }
+
+Vectorobject Vectorobject::distribute(){
+    float sum = get()[0]+get()[2];
+    float coords[3]={get()[0]/sum,
+                    0,
+                    get()[2]/sum};
+    Vectorobject new_v = Vectorobject(coords);
+    return new_v;
+}
