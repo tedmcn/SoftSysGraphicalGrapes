@@ -82,7 +82,27 @@ static void display(void)
 
     //Send the new image to the buffer
     glutSwapBuffers(); 
+
+    //Check player input for next frame
+    player.checkForInput();
 } 
+
+void keyboard_input(unsigned char Key, int x, int y){
+    switch(Key){
+        case 'w':
+            printf("w");
+            break;
+        case 'a':
+            printf("a");
+            break;
+        case 's':
+            printf("s");
+            break;
+        case 'd':
+            printf("d");
+            break;
+    }
+}
 
 
 //Create lights 
@@ -153,6 +173,9 @@ int main(int argc, char *argv[])
  
     //When the program is idle run display
     glutIdleFunc(display);
+
+    //
+    glutKeyboardFunc(keyboard_input);
 
     //Empty void function
     glutMainLoop(); 

@@ -11,6 +11,7 @@ Playerobject::~Playerobject(){
 
 void Playerobject::look(){
 	// printf("%f - %f - %f ",getP()[0],getP()[1],getP()[2]);
+	//			//position					//where you are looking															//normal
     gluLookAt(getP()[0],getP()[1],getP()[2],getP()[0]+getD().get()[0],getP()[1]+getD().get()[1],getP()[2]+getD().get()[2],0.0,1.0,0.0);
 }
 
