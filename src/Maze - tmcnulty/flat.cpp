@@ -101,6 +101,9 @@ void keyboard_input(unsigned char Key, int x, int y){
         case 'd':
             printf("d");
             break;
+        case 27:
+            printf("\nUser exited\n");
+            exit(0);
     }
 }
 
