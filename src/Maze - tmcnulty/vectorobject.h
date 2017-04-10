@@ -28,6 +28,12 @@ public:
     
     Vectorobject distribute();
 
+    Vectorobject invert();
+
+    Vectorobject rotate_clockwise(double angel);
+
+    void print();
+
 protected:
     
 

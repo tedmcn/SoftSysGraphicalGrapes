@@ -15,9 +15,10 @@
 //More complex vectors can be represented with coordinates further from the origin
 //such as {1,2,0} (x=2y graph) which is different from {1,1,0} (which is x=y graph)
 
+#include <stdlib.h> 
+#include <stdio.h>
+#include <math.h>
 #include "vectorobject.h"
-#include <stdlib.h>
-
 //Construct a new vector object
 //
 //c : pointer to float array storing the coordinates it points to from origin
@@ -84,11 +85,39 @@ Vectorobject Vectorobject::average(Vectorobject v){
     return new_v;
 }
 
+//Distributes the vector equally over 1000
+
 Vectorobject Vectorobject::distribute(){
-    float sum = get()[0]+get()[2];
+    float sum = (get()[0]+get()[2])/10000;
+    if(sum<0){
+        sum=sum*-1;
+    }
     float coords[3]={get()[0]/sum,
                     0,
                     get()[2]/sum};
     Vectorobject new_v = Vectorobject(coords);
     return new_v;
+}
+
+Vectorobject Vectorobject::invert(){
+    int i;
+    float temp[]={0,0,0};
+    for(i=0;i<3;i++){
+        temp[i]=coordinates[i]*-1;
+    }
+    return Vectorobject(temp);
+}
+
+Vectorobject Vectorobject::rotate_clockwise(double angel){
+    double radians= (M_PI*angel)/360;
+    float cs = cos(radians);
+    float sn = sin(radians);
+    float x = (coordinates[0] * cs)-(coordinates[2]*sn);
+    float z = (coordinates[0] * sn)+(coordinates[2]*cs);
+    float temp[] = {x,0,z};
+    return Vectorobject(temp);
+}
+
+void Vectorobject::print(){
+    printf("\n%f | %f | %f\n",coordinates[0], coordinates[1], coordinates[2]);
 }

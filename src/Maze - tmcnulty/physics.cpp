@@ -7,7 +7,8 @@
  *Essentially only handles calculating the difference between when the last
  *frame was drawn and &now
 */
-
+#include <stdlib.h> 
+#include <stdio.h>
 #include "physics.h"
 
 //Constructor

@@ -77,29 +77,27 @@ static void display(void)
     //Apply the time update
     p.update();
 
-    //Update the sphere object
-
-
     //Send the new image to the buffer
     glutSwapBuffers(); 
 
     //Check player input for next frame
     player.checkForInput();
+
+    //Execute the input and make sure you are not clipping into a wall
+    //Apply 
+    player.handel(p);
 } 
 
 void keyboard_input(unsigned char Key, int x, int y){
     switch(Key){
         case 'w':
-            printf("w");
-            break;
         case 'a':
-            printf("a");
-            break;
         case 's':
-            printf("s");
-            break;
         case 'd':
-            printf("d");
+            player.move(Key);
+            break;
+        case 'r':
+            //Command to switch cell the user is standing on
             break;
         case 27:
             printf("\nUser exited\n");
