@@ -22,7 +22,7 @@ float clump = 0.0;
 float sparse = 0.0;
 
 // Global pointer to grass terrain paramters
-float terrain_set[][8];
+Node **list;
 
 /*
  * Draw the OpenGL display
@@ -35,7 +35,7 @@ void display(void)
   drawGround(plane[0], plane[1], plane[2], ground_color, origin);
 
   // Draw the grass terrain
-  drawTerrain(terrain_set);
+  drawTerrain(list);
 
   glutSwapBuffers();
 }
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   // Generate grass params
 
   printf("Grass set generated\n");
-  generateTerrain(terrain_set, height, h_var, thick, t_var, color, 
+  generateTerrain(list, height, h_var, thick, t_var, color, 
                       c_var, plane[0], plane[1], clump, sparse);
 
   /* Use depth buffering for hidden surface elimination. */

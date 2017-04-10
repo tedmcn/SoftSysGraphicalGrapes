@@ -29,6 +29,7 @@ void drawGround(float width, float length, float depth, float color[], float ori
  */
 void drawBlade(float base, float height, float position[3], float color[3]) {
   // Set color
+  printf("Draw blade\n");
   glColor3f(color[0], color[1], color[2]);
   GLUquadricObj *quadObj = gluNewQuadric();
   glPushMatrix();
@@ -44,28 +45,38 @@ void drawBlade(float base, float height, float position[3], float color[3]) {
  * INPUT: color - RGB float array
  *        curve - x distance between top of blade and bottom of blade
  */
-void generateTerrain(float result[][8], float height[2], float h_var, 
+void generateTerrain(Node **result, float height[2], float h_var, 
           float thick[2], float t_var, float color[2][3], 
           float c_var, float grid_w, float grid_l, float clump, 
           float sparse) {
+  printf("Generating terrain\n");
   float x;
   float y;
   int i = 0;
   float params[8];
-  printf("grid_w: %f\n", grid_w);
-  for (x = 0; x <= grid_w; x += 5) {
-    for (y = 0; y <= grid_l; y += 5) {
-      result[i][0] = 0.5; // Base
-      result[i][1] = 5.0; // Height
-      result[i][2] = x; // Pos x
-      result[i][3] = y; // Pos y
-      result[i][4] = 0.0; // Pos z
-      result[i][5] = 0.137255; // Color r
-      result[i][6] = 0.556863; // Color g
-      result[i][7] = 0.137255; // Color b
-      i++;
-    }
-  }
+  int test[2] = {3, 2};
+  Node *head = make_node(test, NULL);
+
+  int * grab;
+  grab = head->val;
+  printf("%i\n", grab[0]);
+
+
+  // for (x = 0; x <= grid_w; x; += 5) {
+  //   for (y = 0; y <= grid_l; y += 5) {
+  //     // result[i][0] = 0.5; // Base
+  //     // result[i][1] = 5.0; // Height
+  //     // result[i][2] = x; // Pos x
+  //     // result[i][3] = y; // Pos y
+  //     // result[i][4] = 0.0; // Pos z
+  //     // result[i][5] = 0.137255; // Color r
+  //     // result[i][6] = 0.556863; // Color g
+  //     // result[i][7] = 0.137255; // Color b
+  //     // printf("New size: %i\n", (int)sizeof(result[0]));
+  //     // i++;
+  //     // printf("%i\n", i);
+  //   }
+  // }
 }
 
 
@@ -75,17 +86,18 @@ void generateTerrain(float result[][8], float height[2], float h_var,
  * INPUT: color - RGB float array
  *        curve - x distance between top of blade and bottom of blade
  */
-void drawTerrain(float grass[][8]) {
+void drawTerrain(Node **params) {
+  printf("Draw terrain\n");
   float pos[3];
   float color[3];
   int i;
-  for (i = 0; i < sizeof(grass); i++) {
-    pos[0] = grass[i][2];
-    pos[1] = grass[i][3];
-    pos[2] = grass[i][4];
-    color[0] = grass[i][5];
-    color[1] = grass[i][6];
-    color[2] = grass[i][7];
-    drawBlade(grass[i][0], grass[i][1], pos, color);
-  }
+  // for (i = 0; i < sizeof(grass); i++) {
+  //   pos[0] = grass[i][2];
+  //   pos[1] = grass[i][3];
+  //   pos[2] = grass[i][4];
+  //   color[0] = grass[i][5];
+  //   color[1] = grass[i][6];
+  //   color[2] = grass[i][7];
+  //   drawBlade(grass[i][0], grass[i][1], pos, color);
+  // }
 }
