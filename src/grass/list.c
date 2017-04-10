@@ -57,6 +57,17 @@ void push(Node **list, float val[8]) {
     // Create new node with head as next
     Node *new_head = make_node(val, head);
 
-    // Reset list to new head
+    printf("Reset list\n");
     *list = new_head;
+}
+
+int num_nodes(Node **list) {
+    Node *dummy = *list;
+    int i = 0;
+
+    while (dummy->next != NULL) {
+        dummy = dummy->next;
+        i++;
+    }
+    return i;
 }

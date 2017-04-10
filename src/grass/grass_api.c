@@ -54,12 +54,28 @@ void generateTerrain(Node **result, float height[2], float h_var,
   float y;
   int i = 0;
   float params[8];
-  int test[2] = {3, 2};
+  float test[8] = {3, 2, 5 ,6, 6, 6, 6, 6};
+  float test2[8] = {5, 7, 5 ,6, 6, 6, 6, 6};
+  float test3[8] = {7, 7, 5 ,6, 6, 6, 6, 6};
   Node *head = make_node(test, NULL);
 
-  int * grab;
+  result = &head;
+
+  float * grab;
   grab = head->val;
-  printf("%i\n", grab[0]);
+  printf("%f\n", grab[0]);
+
+  push(result, test2);
+
+  push(result, test3);
+
+  printf("%i\n", num_nodes(result));
+
+  grab = pop(result);
+  printf("%f\n", grab[0]);
+
+  grab = pop(result);
+  printf("%f\n", grab[0]);
 
 
   // for (x = 0; x <= grid_w; x; += 5) {

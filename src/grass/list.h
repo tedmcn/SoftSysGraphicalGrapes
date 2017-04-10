@@ -9,3 +9,4 @@ typedef struct node {
 Node *make_node(float val[8], Node *next);
 float* pop(Node **list);
 void push(Node **list, float val[8]);
+int num_nodes(Node **list);
