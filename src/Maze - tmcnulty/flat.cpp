@@ -105,6 +105,21 @@ void keyboard_input(unsigned char Key, int x, int y){
     }
 }
 
+void specialInput(int key, int x, int y){
+    switch(key){
+        case GLUT_KEY_LEFT:
+        player.setD(player.getD().rotate_clockwise(-5).get());
+            break;
+
+        case GLUT_KEY_RIGHT:
+        player.setD(player.getD().rotate_clockwise(5).get());
+            break;
+        
+        default:
+            break;
+    }
+}
+
 
 //Create lights 
     const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -177,6 +192,7 @@ int main(int argc, char *argv[])
 
     //
     glutKeyboardFunc(keyboard_input);
+    glutSpecialFunc(specialInput);
 
     //Empty void function
     glutMainLoop(); 
