@@ -3,12 +3,15 @@
 ## Project Goals
 
 **Overview**
+
 Our goals for this project are focused around generating graphics procedurally.  We will learn to use OpenGL in conjunction with C to generate graphics and explore a variety of current procedural modeling methods.  We will also explore the integration of Cellular Automata as another method to generate patterns.
 
 **MVP**
+
 Our MVP implementation is an endless maze that is continuously generated following a set of predetermined algorithms.  Maze characteristics will include cellular automata behaviors that define how the new blocks are generated at each step and allowing users to traverse the maze.
 
 **Stretch Goals**
+
 Our stretch goals include generating grass terrain for the maze to explore more advanced procedural algorithms, adding complex player mechanics such as breaking down maze walls, and improving the graphics performance.
 
 ## Completed Trello Cards
@@ -39,6 +42,8 @@ We focused this sprint on creating individual building blocks that are all neces
 
 We began by creating a simple 2D grid drawing API that allows us to draw a grid and fill in specified tiles.  This provides capabilities for drawing 2D mazes.  Moving forward, we are able to draw and move among 3D cubes that will make up the walls of our first person maze game as specified below. 
 
+![Chessboard](./images/Selection_002.png "Chessboard grid drawing using grid api.")
+
 **User motion**
 Since we want our player to be able to navigate the maze in 3D space, we need to map the OpenGL camera onto the “eye” of our player. 
 
@@ -52,7 +57,12 @@ At the moment the player can use the WASD keys to move forward, backwards, straf
 
 
 **Cellular Automata Maze Applications**
+
 We implemented a cellular automata maze generator in OpenGL.  It starts with a hardcoded initial state, but could be expanded to random initial states.  
+
+![CA](./images/CA1.png "Cellular automota implementation.")
+
+![CA Maze](./images/CA2.png "Cellular automota with maze rules.")
 
 These pictures are an example of a simple 20x20 grid maze generated with our cellular automata rules.  The rules it uses are a cell survives if is has 1-5 neighbors, and creates if it has 3 neighbors.  This algorithm will need to be updated to make sure each maze has one path that leads to an exit.
 
@@ -80,6 +90,8 @@ To explore other aspects of advanced procedural graphics generation algorithms, 
 Each blade is drawn individually following an algorithm that is given ranges and variation values for grass height, width, color, and location.  The border values of the ranges are cut at certain percentiles based on the variation parameters to allow a wide variety of appearances with only four input values.  
 
 Moving forward, we will also add sparseness and bend to make the scene more realistic in the spirit of Pixar’s “wondergrass” algorithms.
+
+![Grass](./images/grass.png "Procedurally generated terrain forms showing simple range changes that can be integrated to create semi-realistic grass scenes.")
 
 ### Integration Plan
 
