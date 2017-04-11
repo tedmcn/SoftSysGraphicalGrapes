@@ -45,6 +45,7 @@ We began by creating a simple 2D grid drawing API that allows us to draw a grid 
 ![Chessboard](./images/Selection_002.png "Chessboard grid drawing using grid api.")
 
 **User motion**
+
 Since we want our player to be able to navigate the maze in 3D space, we need to map the OpenGL camera onto the “eye” of our player. 
 
 Our framework is setup such that any object that is drawn has values to represent its position, velocity, and acceleration in all 3 dimensions. This is an advantage when making a game such as this as it will add more realistic motion - it will take time to reach top walking speed and time to slow down. Furthermore, storing these values allows the user to use multiple commands at once. The simplest example would be a user pressing ‘w’ and ‘a’ at the same time with the intention of walking forward-left. It would also be useful if we implement a simple ‘jump’ as the player would continue their momentum even in the jump.
