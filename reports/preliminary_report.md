@@ -68,6 +68,7 @@ These pictures are an example of a simple 20x20 grid maze generated with our cel
 
 We also did research on different procedural maze generation algorithms. Ellerâ€™s Algorithm is one of the few that allow infinite maze generation and it generates a new row of the maze only based on the previous one.
 
+```
   ___________________
   |           |       |
   |           |       |
@@ -81,7 +82,7 @@ We also did research on different procedural maze generation algorithms. Ellerâ€
   |                   |
   |                   |
   |___________________|
-
+```
 
 ### Procedural Terrain Generation
 
