@@ -3,7 +3,7 @@
 
 typedef struct node {
     struct node *next;
-    float * val;
+    float val[8];
 } Node;
 
 Node *make_node(float val[8], Node *next);

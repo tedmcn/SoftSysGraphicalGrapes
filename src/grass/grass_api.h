@@ -15,3 +15,4 @@ void generateTerrain(Node **result, float height[2], float h_var,
 					float c_var, float grid_w, float grid_l, float clump, 
 					float sparse);
 void drawTerrain(Node **params);
+float randomFloat(float a, float b);

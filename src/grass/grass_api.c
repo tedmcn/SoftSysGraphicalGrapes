@@ -29,7 +29,6 @@ void drawGround(float width, float length, float depth, float color[], float ori
  */
 void drawBlade(float base, float height, float position[3], float color[3]) {
   // Set color
-  printf("Draw blade\n");
   glColor3f(color[0], color[1], color[2]);
   GLUquadricObj *quadObj = gluNewQuadric();
   glPushMatrix();
@@ -52,47 +51,29 @@ void generateTerrain(Node **result, float height[2], float h_var,
   printf("Generating terrain\n");
   float x;
   float y;
-  int i = 0;
-  float params[8];
-  float test[8] = {3, 2, 5 ,6, 6, 6, 6, 6};
-  float test2[8] = {5, 7, 5 ,6, 6, 6, 6, 6};
-  float test3[8] = {7, 7, 5 ,6, 6, 6, 6, 6};
-  Node *head = make_node(test, NULL);
 
-  result = &head;
+  // Calculate ranges from var
+  // percentiles here
 
-  float * grab;
-  grab = head->val;
-  printf("%f\n", grab[0]);
+  for (x = 0; x <= grid_w; x += 0.6) {
+    for (y = 0; y <= grid_l; y += 0.6) {
+      float * temp;
+      temp = (float *)malloc(sizeof(float)*8);
 
-  push(result, test2);
+      temp[0] = randomFloat(thick[0], thick[1]); // Base
+      temp[1] = randomFloat(height[0], height[1]); // Height
+      temp[2] = x; // Pos x
+      temp[3] = y; // Pos y
+      temp[4] = 0.0; // Pos z
+      temp[5] = randomFloat(color[0][0], color[1][0]); //0.137255; // Color r
+      temp[6] = randomFloat(color[0][1], color[1][1]); //0.556863; // Color g
+      temp[7] = randomFloat(color[0][2], color[1][2]); //0.137255; // Color b
 
-  push(result, test3);
+      push(result, temp);
+    }
+  }
 
-  printf("%i\n", num_nodes(result));
-
-  grab = pop(result);
-  printf("%f\n", grab[0]);
-
-  grab = pop(result);
-  printf("%f\n", grab[0]);
-
-
-  // for (x = 0; x <= grid_w; x; += 5) {
-  //   for (y = 0; y <= grid_l; y += 5) {
-  //     // result[i][0] = 0.5; // Base
-  //     // result[i][1] = 5.0; // Height
-  //     // result[i][2] = x; // Pos x
-  //     // result[i][3] = y; // Pos y
-  //     // result[i][4] = 0.0; // Pos z
-  //     // result[i][5] = 0.137255; // Color r
-  //     // result[i][6] = 0.556863; // Color g
-  //     // result[i][7] = 0.137255; // Color b
-  //     // printf("New size: %i\n", (int)sizeof(result[0]));
-  //     // i++;
-  //     // printf("%i\n", i);
-  //   }
-  // }
+  printf("Created %i nodes\n", num_nodes(result));
 }
 
 
@@ -103,17 +84,32 @@ void generateTerrain(Node **result, float height[2], float h_var,
  *        curve - x distance between top of blade and bottom of blade
  */
 void drawTerrain(Node **params) {
-  printf("Draw terrain\n");
+  printf("Drawing terrain ..\n");
   float pos[3];
   float color[3];
-  int i;
-  // for (i = 0; i < sizeof(grass); i++) {
-  //   pos[0] = grass[i][2];
-  //   pos[1] = grass[i][3];
-  //   pos[2] = grass[i][4];
-  //   color[0] = grass[i][5];
-  //   color[1] = grass[i][6];
-  //   color[2] = grass[i][7];
-  //   drawBlade(grass[i][0], grass[i][1], pos, color);
-  // }
+
+  int limit = num_nodes(params);
+  Node *dummy = *params;
+
+  while (limit > 0) {
+    float * grab = dummy->val;
+
+    pos[0] = grab[2];
+    pos[1] = grab[3];
+    pos[2] = grab[4];
+    color[0] = grab[5];
+    color[1] = grab[6];
+    color[2] = grab[7];
+    drawBlade(grab[0], grab[1], pos, color);
+
+    dummy = dummy->next;
+    limit--;
+  }
+}
+
+float randomFloat(float a, float b) {
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = b - a;
+    float r = random * diff;
+    return a + r;
 }

@@ -18,10 +18,18 @@ License: Creative Commons Attribution-ShareAlike 3.0
  * returns: pointer to a new node
  */
 Node *make_node(float val[8], Node *next) {
-    Node *node = malloc(sizeof(Node));
-    node->val = val;
-    node->next = next;
-    return node;
+  Node *node = malloc(sizeof(Node));
+
+  node->val[0] = val[0];
+  node->val[1] = val[1];
+  node->val[2] = val[2];
+  node->val[3] = val[3];
+  node->val[4] = val[4];
+  node->val[5] = val[5];
+  node->val[6] = val[6];
+  node->val[7] = val[7];
+  node->next = next;
+  return node;
 }
 
 
@@ -57,7 +65,6 @@ void push(Node **list, float val[8]) {
     // Create new node with head as next
     Node *new_head = make_node(val, head);
 
-    printf("Reset list\n");
     *list = new_head;
 }
 
