@@ -1,4 +1,6 @@
-# Graphical Grapes Preliminary Report
+# Graphical Grapes Preliminary Report: Procedural Graphics Generation 
+
+## Haozheng Du, Kathryn Hite, Ted McNulty, Bill Wong
 
 ## Project Goals
 
