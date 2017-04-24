@@ -6,7 +6,7 @@ typedef struct node {
     float val[8];
 } Node;
 
-Node *make_node(float val[8], Node *next);
+Node *makeNode(float val[8], Node *next);
 float* pop(Node **list);
 void push(Node **list, float val[8]);
-int num_nodes(Node **list);
+int numNodes(Node **list);

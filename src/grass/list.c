@@ -17,7 +17,7 @@ License: Creative Commons Attribution-ShareAlike 3.0
  *
  * returns: pointer to a new node
  */
-Node *make_node(float val[8], Node *next) {
+Node *makeNode(float val[8], Node *next) {
   Node *node = malloc(sizeof(Node));
 
   node->val[0] = val[0];
@@ -63,12 +63,12 @@ void push(Node **list, float val[8]) {
     Node *head = *list;
 
     // Create new node with head as next
-    Node *new_head = make_node(val, head);
+    Node *new_head = makeNode(val, head);
 
     *list = new_head;
 }
 
-int num_nodes(Node **list) {
+int numNodes(Node **list) {
     Node *dummy = *list;
     int i = 0;
 
