@@ -11,17 +11,11 @@ float ground_color[3] = {0.52, 0.37, 0.26};
 float origin[2] = {0.0, 0.0};
 
 // Set the generative grass parameters
-float height[2] = {1.0, 5.0};
-float h_var = 0.0; 
-float thick[2] = {0.1, 0.2};
-float t_var = 0.0;
-float color[2][3] = {{0.576471, 0.858824, 0.439216}, {0.184314, 0.309804, 0.184314}};
-
-// {{0.137255, 0.556863, 0.137255}, 
-//   {0.258824, 0.435294, 0.258824}}; 
-float c_var = 0.0;
-float clump = 0.0;
-float sparse = 0.0;
+float height[2] = {1.0, 3.0};
+float thick[2] = {0.01, 0.1};
+float color[2][3] = {{0.576471, 0.858824, 0.439216}, 
+                      {0.184314, 0.309804, 0.184314}};
+float sparse = 0.1;
 
 // Global pointer to grass terrain paramters
 Node **list;
@@ -53,18 +47,15 @@ int main(int argc, char **argv)
 
   float temp[8] = {0,0,0,0,0,0,0,0};
 
-  Node *head = make_node(temp, NULL);
+  Node *head = makeNode(temp, NULL);
 
   list = &head;
 
   // Generate grass params
-  generateTerrain(list, height, h_var, thick, t_var, color, 
-                      c_var, plane[0], plane[1], clump, sparse);
+  generateTerrain(list, height, thick, color, plane[0], 
+                  plane[1], sparse);
 
-  printf("Nodes passed: %i\n", num_nodes(list));
-
-    float *grab = pop(list);
-  printf("%f\n", grab[2]);
+  printf("Nodes passed: %i\n", numNodes(list));
 
   /* Use depth buffering for hidden surface elimination. */
   glEnable(GL_DEPTH_TEST);
@@ -78,7 +69,9 @@ int main(int argc, char **argv)
     0.0, 8.0, 0.0,      /* center is at (0,0,0) */
     0.0, 1.0, 0.0);      /* up is in postivie Y direction */
 
-  glRotatef(-60.0, 1.0, 0.0, 0.0);
+  // UD rotation
+  glRotatef(-50.0, 1.0, 0.0, 0.0);
+  // Spin rotation
   glRotatef(45.0, 0.0, 0.0, 1.0);
   glutDisplayFunc(display);
 
