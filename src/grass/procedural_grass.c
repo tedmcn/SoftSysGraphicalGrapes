@@ -1,9 +1,14 @@
-/* Procedural 2D maze with user motion
+/* 
+ * Procedural 2D maze with user motion
  * New rows are drawn when user passes edge
  */
 
 
 #include "grass_api.h"
+#include "buttons.h"
+
+int SCREEN_WIDTH = 1500;
+int SCREEN_HEIGHT = 1500;
 
 // Set the ground plane params
 float plane[3] = {50.0, 50.0, 1.0};
@@ -20,6 +25,37 @@ float sparse = 0.1;
 // Global pointer to grass terrain paramters
 Node **list;
 
+
+/*
+ * Draw the user interface sliders and inputs
+ */
+void drawGui() {
+	glPopMatrix();
+	// Start 2d
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	// Draw background box
+	glColor3f(100.0f, 255.0f, 100.0f);
+	glBegin(GL_QUADS);
+	    glVertex2f(SCREEN_WIDTH - SCREEN_WIDTH / 5.0, 0.0);
+	    glVertex2f(SCREEN_WIDTH - SCREEN_WIDTH / 5.0, SCREEN_WIDTH);
+	    glVertex2f(SCREEN_WIDTH, SCREEN_HEIGHT);
+	    glVertex2f(SCREEN_WIDTH, 0.0);
+	glEnd();
+	
+	char *title = "Procedural Grass Demo";
+
+	// printText(50, 50, title);
+
+	drawButtons();
+}
+
+
 /*
  * Draw the OpenGL display
  */
@@ -27,39 +63,7 @@ void display(void)
 {
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-  // Draw a ground plane
-  drawGround(plane[0], plane[1], plane[2], ground_color, origin);
-
-  // Draw the grass terrain
-  drawTerrain(list);
-
-  glutSwapBuffers();
-}
-
-
-int main(int argc, char **argv)
-{
-  glutInit(&argc, argv);
-
-  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-  glutInitWindowSize(500, 500);
-  glutCreateWindow("Grass");
-
-  float temp[8] = {0,0,0,0,0,0,0,0};
-
-  Node *head = makeNode(temp, NULL);
-
-  list = &head;
-
-  // Generate grass params
-  generateTerrain(list, height, thick, color, plane[0], 
-                  plane[1], sparse);
-
-  printf("Nodes passed: %i\n", numNodes(list));
-
-  /* Use depth buffering for hidden surface elimination. */
-  glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_DEPTH_TEST);
   glMatrixMode(GL_PROJECTION);
   gluPerspective( /* field of view in degree */ 40.0,
   /* aspect ratio */ 1.0,
@@ -73,9 +77,49 @@ int main(int argc, char **argv)
   glRotatef(-50.0, 1.0, 0.0, 0.0);
   // Spin rotation
   glRotatef(45.0, 0.0, 0.0, 1.0);
+
+  // Draw a ground plane
+  drawGround(plane[0], plane[1], plane[2], ground_color, origin);
+
+  // Draw the grass terrain
+  drawTerrain(list);
+
+  drawGui();
+
+  glutSwapBuffers();
+}
+
+
+int main(int argc, char **argv)
+{
+  glutInit(&argc, argv);
+
+  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+  glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+  glutCreateWindow("Grass Demo");
+
+  float temp[8] = {0,0,0,0,0,0,0,0};
+
+  Node *head = makeNode(temp, NULL);
+
+  list = &head;
+
+  // Generate grass params
+  generateTerrain(list, height, thick, color, plane[0], 
+                  plane[1], sparse);
+
+  printf("Nodes passed: %i\n", numNodes(list));
+
+	// Update the mouse position when moved
+	glutMotionFunc(MouseActiveUpdate);
+	glutPassiveMotionFunc(MousePassiveUpdate);
+
+	// Check for mouse click
+	glutMouseFunc(MouseButton);
+
   glutDisplayFunc(display);
 
   glutMainLoop();
 
-  return 0;  
+  return 0;
 }
