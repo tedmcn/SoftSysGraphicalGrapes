@@ -47,7 +47,7 @@ void drawBlade(float base, float height, float position[3], float color[3]) {
  */
 void generateTerrain(Node **result, float height[2], float thick[2],
                      float color[2][3], float grid_w, float grid_l, 
-                     float sparse) {
+                     float sparse, float dev) {
   printf("Generating terrain\n");
   float x = 0;
   float y = 0;
@@ -68,8 +68,8 @@ void generateTerrain(Node **result, float height[2], float thick[2],
     temp = (float *)malloc(sizeof(float)*8);
 
     // Demo 1: Compute blade position based on distribution around center point
-    x = boxMuller(grid_w / 2.0, grid_w, 0.0, grid_w);
-    y = boxMuller(grid_l / 2.0, grid_l, 0.0, grid_l);
+    x = boxMuller(grid_w / 2.0, dev, 0.0, grid_w);
+    y = boxMuller(grid_l / 2.0, dev, 0.0, grid_l);
 
     // Demo 2: Spread blades evenly over terrain
     // x += base_mid;
@@ -108,6 +108,8 @@ void drawTerrain(Node **params) {
   int limit = numNodes(params);
   Node *dummy = *params;
 
+  printf("%i\n", limit);
+
   while (limit > 0) {
     float * grab = dummy->val;
 
@@ -122,6 +124,7 @@ void drawTerrain(Node **params) {
     dummy = dummy->next;
     limit--;
   }
+  printf("Drew terrain\n");
 }
 
 
