@@ -58,7 +58,7 @@ void Playerobject::look(){
 	//Third is normal
     gluLookAt(	getP()[0],					getP()[1],					getP()[2],
     			getP()[0]+getD().get()[0],	getP()[1]+getD().get()[1],	getP()[2]+getD().get()[2],
-    			0.0,						1.0,						0.0);
+    			0.0,						getP()[1]+1.0,				0.0);
 }
 
 void Playerobject::move(char Key){
@@ -92,11 +92,11 @@ void Playerobject::rotateRight(){
 }
 
 void Playerobject::jump(){
-	float new_velocity[3]={getV().get()[0],1000000,getV().get()[2]};
-	// if(getP()[1]==10){
-	setV(new_velocity);
-	print();
-	// }
+	float new_acceleration[3]={getA().get()[0],3,getA().get()[2]};
+	if(getP()[1]==10){
+		setA(new_acceleration);
+		print();
+	}
 	
 }
 
@@ -130,7 +130,7 @@ bool Playerobject::handel(Physics p){
 	float* temp_acceleration = getA().get();
 
 	//Get time
-	long double diff = p.getDiff()*10;
+	long double diff = p.getDiff()*100;
 	// printf("%Lf\n",diff );
 
 	//***********************************************************************//
@@ -145,7 +145,7 @@ bool Playerobject::handel(Physics p){
 	if(getP()[1]<10 || getP()[1]==10){
 		temp_values1[1]=10;
 	}
-	if(getP()[1]>10){
+	if(getP()[1]>10 || getV().get()[1]!=0){
 		temp_values1[1]=diff*temp_velocity[1];
 		temp_values1[1]=temp_position[1]+temp_values1[1];
 	}
@@ -158,13 +158,13 @@ bool Playerobject::handel(Physics p){
 	//***********************************************************************//    
 
 	//Convert acceleration into velocity
-	temp_values2[0]=(diff*temp_acceleration[0])+temp_velocity[0];
-	temp_values2[2]=(diff*temp_acceleration[2])+temp_velocity[2];
+	temp_values2[0]=((diff*temp_acceleration[0])+temp_velocity[0])*.99;
+	temp_values2[2]=((diff*temp_acceleration[2])+temp_velocity[2])*.99;
 
 	if(getP()[1]<10){
 		temp_values2[1]=0;
 	}
-	if(getP()[1]>10){
+	else{
 		temp_values2[1]=(diff*temp_acceleration[1])+temp_velocity[1];
 	}
 
@@ -175,10 +175,13 @@ bool Playerobject::handel(Physics p){
 	//***********************************************************************//
 
 
-	for(i=0;i<3;i+=2){
+	for(i=0;i<3;i++){
 		temp_values3[i]=temp_acceleration[i]*0.90;
 	}
-	temp_values3[1]=-10;
+	if(temp_values3[1]>-5){
+		temp_values3[1]=temp_values3[1]+(diff*-.15);
+	}
+	// temp_values3[1]=-.5;
 	setA(temp_values3);
 
 
