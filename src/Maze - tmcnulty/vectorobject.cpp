@@ -85,17 +85,20 @@ Vectorobject Vectorobject::average(Vectorobject v){
     return new_v;
 }
 
-//Distributes the vector equally over 1000
 
 Vectorobject Vectorobject::distribute(){
-    float sum = (get()[0]+get()[2])/10000;
+    float sum = get()[0]+get()[2];
     if(sum<0){
         sum=sum*-1;
+    }
+    if(sum==0){
+
     }
     float coords[3]={get()[0]/sum,
                     0,
                     get()[2]/sum};
     Vectorobject new_v = Vectorobject(coords);
+    print();
     return new_v;
 }
 

@@ -99,6 +99,9 @@ void keyboard_input(unsigned char Key, int x, int y){
         case 'r':
             //Command to switch cell the user is standing on
             break;
+        case ' ':
+            player.jump();
+            break;
         case 27:
             printf("\nUser exited\n");
             exit(0);
@@ -108,11 +111,11 @@ void keyboard_input(unsigned char Key, int x, int y){
 void specialInput(int key, int x, int y){
     switch(key){
         case GLUT_KEY_LEFT:
-        player.setD(player.getD().rotate_clockwise(-5).get());
+        player.rotateLeft();
             break;
 
         case GLUT_KEY_RIGHT:
-        player.setD(player.getD().rotate_clockwise(5).get());
+        player.rotateRight();
             break;
         
         default:

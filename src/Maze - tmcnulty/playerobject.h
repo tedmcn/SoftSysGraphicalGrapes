@@ -19,11 +19,22 @@ public:
 	Playerobject();
 	~Playerobject();
 
+	void print();
+
 	//Set the camera based on the playerobjects's pos and where it is looking
 	void look();
 
 	//Move the character based on the key input
 	void move(char Key);
+
+	//Rotate the player Left
+	void rotateLeft();
+
+	//Rotate the player right
+	void rotateRight();
+
+	//Makes the player jump
+	void jump();
 
 	//Check for user input to turn or move forward
 	bool checkForInput();
