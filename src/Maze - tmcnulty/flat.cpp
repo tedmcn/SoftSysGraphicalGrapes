@@ -4,7 +4,8 @@
 
 
  *Main entry point for program
- *Runs a simulation of a ball falling onto a flat plane with a little bounce-back
+ *Runs a simulation of a ball falling onto a flat plane with a 
+ *little bounce-back
 */
 
 #include <GL/glut.h>
@@ -19,7 +20,8 @@
 #include "playerobject.h"
 
 
-//Create the sphere and plane globally since they are needed throughout the whole simulation
+//Create the sphere and plane globally since they are needed 
+// throughout the whole simulation
 float plane_normal[]={0,1,0};
 float plane_scale[]={100,.1,100};
 float plane_rotate[]={0,0,0};
@@ -50,7 +52,8 @@ static void resize(int width, int height)
 } 
  
 
-//This function is used on every frame, it is used to draw the 3d environment onto the screen
+//This function is used on every frame, it is used to draw the 
+// 3d environment onto the screen
 static void display(void)
 { 
     //Clear the previous image
@@ -61,7 +64,8 @@ static void display(void)
     glLoadIdentity();
 
     //Set the camera
-    //First set of 3 is coords of eye, second set of 3 is where it is looking, 3rd is normal
+    //First set of 3 is coords of eye, second set of 3 is where it is looking, 
+    // 3rd is normal
     player.look();
 
     //Draw in red
@@ -119,15 +123,11 @@ static void display(void)
     }
 } 
 
+//When a player presses a key add it to the buffer
 void keyboard_input(unsigned char key, int x, int y){
-    
     inputBuffer[key]=true;
-
-    // switch(Key){
-
-    // }
 }
-
+//When the player releases the key remove it from the buffer
 void keyboard_up(unsigned char key, int x, int y){
     inputBuffer[key]=false;
 }
