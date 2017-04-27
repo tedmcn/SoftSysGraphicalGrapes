@@ -31,6 +31,7 @@ float player_starting_coords[]={0,10,1};
 float player_starting_direction[]={1,0,0};
 Playerobject player;
 
+bool inputBuffer[256];
 
 //Used for resizing the window if it changes
 //
@@ -86,43 +87,50 @@ static void display(void)
     //Execute the input and make sure you are not clipping into a wall
     //Apply 
     player.handel(p);
+
+    //Apply all the user inputs in the buffer
+    int i;
+    for(i=0;i<256;i++){
+        if(inputBuffer[i]==true){
+            switch(i){
+                case 'w':
+                case 'a':
+                case 's':
+                case 'd':
+                    player.move(i);
+                    break;
+                case 'r':
+                    //Command to switch cell the user is standing on
+                    break;
+                case ' ':
+                    player.jump();
+                    break;
+                case 'j':
+                    player.rotateLeft();
+                    break;
+                case 'l':
+                    player.rotateRight();
+                    break;
+                case 27:
+                    printf("\nUser exited\n");
+                    exit(0);
+            }
+        }
+    }
 } 
 
-void keyboard_input(unsigned char Key, int x, int y){
-    switch(Key){
-        case 'w':
-        case 'a':
-        case 's':
-        case 'd':
-            player.move(Key);
-            break;
-        case 'r':
-            //Command to switch cell the user is standing on
-            break;
-        case ' ':
-            player.jump();
-            break;
-        case 27:
-            printf("\nUser exited\n");
-            exit(0);
-    }
+void keyboard_input(unsigned char key, int x, int y){
+    
+    inputBuffer[key]=true;
+
+    // switch(Key){
+
+    // }
 }
 
-void specialInput(int key, int x, int y){
-    switch(key){
-        case GLUT_KEY_LEFT:
-        player.rotateLeft();
-            break;
-
-        case GLUT_KEY_RIGHT:
-        player.rotateRight();
-            break;
-        
-        default:
-            break;
-    }
+void keyboard_up(unsigned char key, int x, int y){
+    inputBuffer[key]=false;
 }
-
 
 //Create lights 
     const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -193,9 +201,9 @@ int main(int argc, char *argv[])
     //When the program is idle run display
     glutIdleFunc(display);
 
-    //
+    //Tell OpenGL what keyboard functions we need to listen for
     glutKeyboardFunc(keyboard_input);
-    glutSpecialFunc(specialInput);
+    glutKeyboardUpFunc(keyboard_up);
 
     //Empty void function
     glutMainLoop(); 

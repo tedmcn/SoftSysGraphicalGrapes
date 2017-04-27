@@ -82,12 +82,12 @@ void Playerobject::move(char Key){
 }
 
 void Playerobject::rotateLeft(){
-    setD(getD().rotate_clockwise(-5).get());
+    setD(getD().rotate_clockwise(-.05).get());
     // getD().print();
 }
 
 void Playerobject::rotateRight(){
-    setD(getD().rotate_clockwise(5).get());
+    setD(getD().rotate_clockwise(.05).get());
     // getD().print();
 }
 
@@ -130,7 +130,7 @@ bool Playerobject::handel(Physics p){
 	float* temp_acceleration = getA().get();
 
 	//Get time
-	long double diff = p.getDiff()*100;
+	long double diff = p.getDiff()*10;
 	// printf("%Lf\n",diff );
 
 	//***********************************************************************//
