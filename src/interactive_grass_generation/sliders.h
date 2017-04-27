@@ -20,5 +20,6 @@ struct Slider
 	char *max_label; // Text label for max
 };
 
+void SliderLabels(void *font, char *string, int x, int y);
 void SliderDraw(Slider *s);
 int SliderClickTest(Slider* s, int x, int y);

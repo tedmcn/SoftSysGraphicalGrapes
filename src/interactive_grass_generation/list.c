@@ -1,11 +1,6 @@
-/* Example code for Exercises in C.
-
-Based on an example from http://www.learn-c.org/en/Linked_lists
-
-Copyright 2016 Allen Downey
-License: Creative Commons Attribution-ShareAlike 3.0
-
-*/
+/* 
+ * List - Provide a simple limked list interface, nodes store float arrays
+ */
 
 #include "list.h"
 
@@ -68,6 +63,10 @@ void push(Node **list, float val[8]) {
     *list = new_head;
 }
 
+
+/*
+ * Outputs the number of nodes in a list
+ */
 int numNodes(Node **list) {
     Node *dummy = *list;
     int i = 0;

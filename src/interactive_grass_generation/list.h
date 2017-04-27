@@ -1,3 +1,7 @@
+/* 
+ * List - Provide a simple limked list interface, nodes store float arrays
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 

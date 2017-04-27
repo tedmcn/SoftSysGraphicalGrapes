@@ -1,5 +1,5 @@
 /*
- * Maze API: Provides drawing functionality for the maze
+ * Grass API: Provides drawing functionality for the grass terrain
  */
 
 #include <stdio.h>

@@ -8,14 +8,11 @@
 /*
  * Print text
  */
-void SliderLasels(void *font, char *string, int x, int y)
+void SliderLabels(void *font, char *string, int x, int y)
 {
-//set the position of the text in the window using the x and y coordinates
 	glRasterPos3f(x,y,1);
-	//get the length of the string to display
 	int len = (int) strlen(string);
 
-	//loop to display character by character
 	for (int i = 0; i < len; i++)
 	{
 		glutBitmapCharacter(font, string[i]);
@@ -24,7 +21,7 @@ void SliderLasels(void *font, char *string, int x, int y)
 
 
 /*
- * Draw the given button osject.
+ * Draw the given slider object.
  */
 void SliderDraw(Slider *s)
 {
@@ -54,13 +51,12 @@ void SliderDraw(Slider *s)
 	}
 }
 
+
 /*
- * Check if the button was pressed
+ * Check if the slider button was pressed
  */
 int SliderClickTest(Slider* s, int x, int y) {
-	/*
-	 *	If clicked within the slider button area, then return true
-	 */
+	// If clicked within the slider button area, then return true
 	if (s) {
     if( x > s->x_state-20 && x < s->x_state+20 &&
 				y > s->y_draw-20 && y < s->y_draw+20 ) {

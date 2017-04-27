@@ -1,6 +1,9 @@
 /* 
- * Procedural 2D maze with user motion
- * New rows are drawn when user passes edge
+ * Procedural Grass Generator with interactive demo
+ * 
+ * This file contains the main OpenGL objects and callbacks
+ * Procedural grass generation is contained within the grass api files
+ * Other gui and drawing utils are in the list, buttons, and sliders files
  */
 
 
@@ -11,12 +14,12 @@
 int SCREEN_WIDTH = 750;
 int SCREEN_HEIGHT = 750;
 
-// Set the ground plane params
+// Set ground parameters
 float plane[3] = {50.0, 50.0, 1.0};
 float ground_color[3] = {0.52, 0.37, 0.26};
 float origin[2] = {0.0, 0.0};
 
-// Set the generative grass parameters
+// Set initial generative grass parameters
 float height[2] = {1.0, 3.0};
 float thick[2] = {0.01, 0.1};
 float color[2][3] = {{0.576471, 0.858824, 0.439216}, 
@@ -25,45 +28,43 @@ float sparse = 0.2;
 
 float dev = 50.0;
 
-// Global pointer to grass terrain paramters
+// Global pointer to grass terrain paramters linked list
 Node **list;
 
+// Only redraw the terrain when the button is pressed for speed
 int redraw_terrain = 1;
 
-// Declare all the sliders
+// Create the interactive param sliders
 struct Slider HeightSlider = {600, 700, 
-												650, 0.0, (750 / 5) * 1, 
-												"short", "tall"};
+															650, 0.0, (750 / 5) * 1,
+															"short", "tall"};
 struct Slider WidthSlider = {600, 700, 
-												650, 0.0, (750 / 5) * 2, 
-												"thin", "thick"};
+															650, 0.0, (750 / 5) * 2, 
+															"thin", "thick"};
 struct Slider SparseSlider = {600, 700,
-												650, 0.0, (750 / 5) * 3, 
-												"sparse", "full"};
+															650, 0.0, (750 / 5) * 3, 
+															"sparse", "full"};
 struct Slider DistrSlider = {600, 700, 
-												650, 0.0, (750 / 5) * 4, 
-												"clumped", "spread"};
+															650, 0.0, (750 / 5) * 4, 
+															"clumped", "spread"};
 
-// Declare the redraw button and callback
+/* 
+ *	Generate a new list of grass blades when the redraw button is pressed
+ */
 void redrawCallback() {
-	// Update the grass params from the sliders
+
+	// Update the grass params from the slider values
 	height[1] = HeightSlider.value;
 	thick[1] = WidthSlider.value;
 	sparse = SparseSlider.value;
 	dev = DistrSlider.value;
 
 	// Regenerate the blade list
-	// TODO: free the mem for old list
 
 	Node **newList;
-
 	float temp[8] = {0,0,0,0,0,0,0,0};
-
   Node *newHead = makeNode(temp, NULL);
-
   newList = &newHead;
-
-  printf("New list: %i\n", numNodes(list));
 
   generateTerrain(newList, height, thick, color, plane[0], 
                   plane[1], sparse, dev);
@@ -71,15 +72,12 @@ void redrawCallback() {
   printf("Nodes passed: %i\n", numNodes(newList));
 
   *list = *newList;
-
-  printf("Passed list: %i\n", numNodes(list)); 
-
   redraw_terrain = 1;
 
   glutPostRedisplay();
 }
 
-
+// Create the redraw button and mouse objects
 struct Button Redraw = {600, 675, 100, 25, 0, "Redraw", redrawCallback};
 struct Mouse TheMouse = {0, 0, 0, 0, 0};
 
@@ -88,8 +86,7 @@ struct Mouse TheMouse = {0, 0, 0, 0, 0};
  * Draw the user interface sliders and inputs
  */
 void drawGui() {
-
-	// Start 2d
+	// Convert to ortho 2D
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, -1, 1);
@@ -102,6 +99,7 @@ void drawGui() {
 	glColor3f(0.0, 255.0f, 0.0);	
 	Font(GLUT_BITMAP_HELVETICA_10, title, 600, 50);
 
+	// Draw the button and sliders
 	ButtonDraw(&Redraw);
 	SliderDraw(&HeightSlider);
 	SliderDraw(&WidthSlider);
@@ -111,7 +109,7 @@ void drawGui() {
 
 
 /*
- * Draw the OpenGL display
+ * Draw the main OpenGL display
  */
 void display(void)
 {
@@ -138,14 +136,12 @@ void display(void)
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective( /* field of view in degree */ 40.0,
-  /* aspect ratio */ 1.0,
-    /* Z near */ 1.0, /* Z far */ 200.0);
+  gluPerspective(40.0, 1.0, 1.0, 200.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(0.0, 0.0, 20.0,  /* eye is at (0,0,30) */
-  0.0, 8.0, 0.0,      /* center is at (0,0,0) */
-  0.0, 1.0, 0.0);      /* up is in postivie Y direction */
+  gluLookAt(0.0, 0.0, 20.0, // eye is at (0,0,30)
+  0.0, 8.0, 0.0, // center is at (0,0,0)
+  0.0, 1.0, 0.0); // up is in postivie Y direction
 
 	// UD rotation
   glRotatef(-50.0, 1.0, 0.0, 0.0);
@@ -154,7 +150,6 @@ void display(void)
   glRotatef(45.0, 0.0, 0.0, 1.0);
 
   glutSwapBuffers();
-
 }
 
 
@@ -163,9 +158,6 @@ void display(void)
  */
 void MouseActiveUpdate(int x, int y)
 {
-
-	int dx = x - TheMouse.x;
-	int dy = y - TheMouse.y;
 
 	TheMouse.x = x;
 	TheMouse.y = y;
@@ -335,14 +327,12 @@ int main(int argc, char **argv)
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective( /* field of view in degree */ 40.0,
-  /* aspect ratio */ 1.0,
-    /* Z near */ 1.0, /* Z far */ 200.0);
+  gluPerspective(40.0, 1.0, 1.0, 200.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(0.0, 0.0, 20.0,  /* eye is at (0,0,30) */
-  0.0, 8.0, 0.0,      /* center is at (0,0,0) */
-  0.0, 1.0, 0.0);      /* up is in postivie Y direction */
+  gluLookAt(0.0, 0.0, 20.0, // eye is at (0,0,30)
+  0.0, 8.0, 0.0, // center is at (0,0,0)
+  0.0, 1.0, 0.0); // up is in postivie Y direction
 
 	// UD rotation
   glRotatef(-50.0, 1.0, 0.0, 0.0);

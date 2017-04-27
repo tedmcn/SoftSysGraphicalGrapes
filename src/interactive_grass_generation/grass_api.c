@@ -67,16 +67,9 @@ void generateTerrain(Node **result, float height[2], float thick[2],
     float * temp;
     temp = (float *)malloc(sizeof(float)*8);
 
-    // Demo 1: Compute blade position based on distribution around center point
+    // Compute blade position based on distribution around center point
     x = boxMuller(grid_w / 2.0, dev, 0.0, grid_w);
     y = boxMuller(grid_l / 2.0, dev, 0.0, grid_l);
-
-    // Demo 2: Spread blades evenly over terrain
-    // x += base_mid;
-    // if (x > grid_w) {
-    //   x = 0;
-    //   y += base_mid;
-    // } 
 
     // Assign blade params to node
     temp[0] = randomFloat(thick[0], thick[1]); // Base
