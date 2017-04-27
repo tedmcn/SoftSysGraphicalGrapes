@@ -53,7 +53,7 @@ void generateTerrain(Node **result, float height[2], float thick[2],
   float y = 0;
 
   // Compute median of the base range
-  float base_mid = (thick[0] + thick[1])/2;
+  float base_mid = (thick[0] + thick[1])/2.0;
   printf("Base median: %f\n", base_mid);
 
   // Compute number of blades in the scene

@@ -88,7 +88,7 @@ struct Mouse TheMouse = {0, 0, 0, 0, 0};
  * Draw the user interface sliders and inputs
  */
 void drawGui() {
-	glPopMatrix();
+
 	// Start 2d
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -107,8 +107,6 @@ void drawGui() {
 	SliderDraw(&WidthSlider);
 	SliderDraw(&SparseSlider);
 	SliderDraw(&DistrSlider);
-
-	glPushMatrix();
 }
 
 
@@ -123,8 +121,6 @@ void display(void)
 
 	glEnable(GL_DEPTH_TEST);
 
-  glMatrixMode(GL_MODELVIEW);
-
   // Draw a ground plane
   drawGround(plane[0], plane[1], plane[2], ground_color, origin);
 
@@ -137,6 +133,25 @@ void display(void)
 
   drawGui();
 
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective( /* field of view in degree */ 40.0,
+  /* aspect ratio */ 1.0,
+    /* Z near */ 1.0, /* Z far */ 200.0);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  gluLookAt(0.0, 0.0, 20.0,  /* eye is at (0,0,30) */
+  0.0, 8.0, 0.0,      /* center is at (0,0,0) */
+  0.0, 1.0, 0.0);      /* up is in postivie Y direction */
+
+	// UD rotation
+  glRotatef(-50.0, 1.0, 0.0, 0.0);
+
+  // Spin rotation
+  glRotatef(45.0, 0.0, 0.0, 1.0);
 
   glutSwapBuffers();
 
@@ -186,7 +201,7 @@ void MouseActiveUpdate(int x, int y)
 
 		// Update width value
 		float w_in[2] = {(float)WidthSlider.x_min, (float)WidthSlider.x_max};
-		float w_out[2] = {0.01, 0.5};
+		float w_out[2] = {0.08, 1.0};
 		WidthSlider.value = map(w_in, w_out, WidthSlider.x_state);
 		printf("Max width: %f\n", WidthSlider.value);
 	}
@@ -319,11 +334,12 @@ int main(int argc, char **argv)
   glLoadIdentity();
 
   glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
   gluPerspective( /* field of view in degree */ 40.0,
   /* aspect ratio */ 1.0,
     /* Z near */ 1.0, /* Z far */ 200.0);
   glMatrixMode(GL_MODELVIEW);
-
+  glLoadIdentity();
   gluLookAt(0.0, 0.0, 20.0,  /* eye is at (0,0,30) */
   0.0, 8.0, 0.0,      /* center is at (0,0,0) */
   0.0, 1.0, 0.0);      /* up is in postivie Y direction */
