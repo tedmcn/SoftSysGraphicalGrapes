@@ -13,7 +13,7 @@ void drawGround(float width, float legnth, float depth, float color[],
 void drawBlade(float base, float height, float position[3], float color[3]);
 void generateTerrain(Node **result, float height[2], float thick[2],
                      float color[2][3], float grid_w, float grid_l, 
-                     float sparse);
+                     float sparse, float dev);
 void drawTerrain(Node **params);
 int numBlades(float sparse, float grid_w, float grid_l, float med);
 float randomFloat(float a, float b);
