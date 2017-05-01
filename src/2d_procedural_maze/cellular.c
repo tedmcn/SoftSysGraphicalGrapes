@@ -7,15 +7,16 @@
 #include <time.h>
 #include <GL/glut.h>
 #include "buttons.h"
+#include "maze_api.h"
 
 static const int TILE_LEN = 10;
 static const int PLAYER_WIDTH = 4;
 static const int SPEED = 2;
-static const int ORIGIN[2] = {-300, -290};
 static const int STARTING_ROW = 39;
 static const int STARTING_COL = 40;
 static const int ROWS = 80;
 static const int COLS = 80;
+int ORIGIN[2] = {-300, -290};
 
 // Init cellular array and position parameters
 int yTranslation = 0;
@@ -56,48 +57,6 @@ void startCallback() {
 // Create the start button and mouse objects
 struct Button Start = {325, 200, 100, 50, 0, "START", startCallback};
 struct Mouse TheMouse = {0, 0, 0, 0, 0};
-
-
-/*
- * Draw the background grid to place cells within
- */
-void createGrid(int rows, int cols) {
-  glColor3f(0.0, 1.0, 0.0);
-  glLineWidth(10);
-  glBegin(GL_LINES);
-  int r;
-  int c;
-  // Rows
-  for (r = 0; r < rows + 1; r++) {
-    glVertex2f(ORIGIN[0], ORIGIN[1] + (TILE_LEN * r));
-    glVertex2f(ORIGIN[0] + (cols * TILE_LEN), ORIGIN[1] + (TILE_LEN * r));
-  }
-  // Cols
-  for (c = 0; c < cols + 1; c++) {
-    glVertex2f(ORIGIN[0] + (TILE_LEN * c), ORIGIN[1]);
-    glVertex2f(ORIGIN[0] + (TILE_LEN * c), ORIGIN[1] + (rows * TILE_LEN));
-  }
-  glEnd();
-}
-
-
-/*
- * Draw an individual tile within the set grid
- */
-void createTile(int coord[], int alive) {
-  // Fill in grid square
-  if (alive) {
-    glColor3f(0.0, 0.0, 1.0);
-  } else {
-    glColor3f(0.0, 0.0, 0.0);
-  }
-  glBegin(GL_POLYGON);
-  glVertex3f(coord[0], coord[1], 0.0);
-  glVertex3f(coord[0] + TILE_LEN, coord[1], 0.0);
-  glVertex3f(coord[0] + TILE_LEN, coord[1] + TILE_LEN, 0.0);
-  glVertex3f(coord[0], coord[1] + TILE_LEN, 0.0);
-  glEnd();
-}
 
 
 /*
@@ -265,71 +224,19 @@ void createRow(int direction)
 /*
  * Draw the grid and tiles of the maze
  */
-void createChessboard() {
+void createMaze() {
   int coord[2];
   int i;
   int j;
 
-  createGrid(ROWS, COLS);
+  createGrid(ROWS, COLS, ORIGIN, TILE_LEN);
   for (i = 0; i < ROWS; i++) {
     for (j = 0; j < COLS; j++) {
       coord[0] = ORIGIN[0] + (TILE_LEN * j);
       coord[1] = ORIGIN[1] + (TILE_LEN * i);
-      createTile(coord, alive_arr[i][j]);
+      createTile(coord, alive_arr[i][j], TILE_LEN);
     }
   }
-}
-
-
-/*
- * Draw the player square at a given position
- */
-void drawPlayer(int x, int y, int width) {
-  // Draw initial player position
-  glColor3f(1.0, 0.0, 0.0);
-  glBegin(GL_POLYGON);
-  glVertex3f(x, y, 1.0);
-  glVertex3f(x+width, y, 1.0);
-  glVertex3f(x+width, y+width, 1.0);
-  glVertex3f(x, y+width, 1.0);
-  glEnd();
-}
-
-
-/*
- * Draw the start screen with instructions
- */
-void drawStartScreen() {
-  glClearColor(0.0, 0.0, 0.0, 0.0);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  // Set viewing world with one top and bottom row outside of view
-  glOrtho(0.0, 750.0, 0.0, 750.0, -1.0, 1.0);
-
-  // Draw background
-  glColor3f(0.8, 0.8, 1.0);
-  glBegin(GL_POLYGON);
-  glVertex3f(0, 0, 0.0);
-  glVertex3f(750, 0, 0.0);
-  glVertex3f(750, 750, 0.0);
-  glVertex3f(0, 750, 0.0);
-  glEnd();
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  
-  char *title = "The Infinite Maze";
-
-  glColor3f(0.1, 0.3, 6.0);  
-  Font(GLUT_BITMAP_TIMES_ROMAN_24, title, 310, 500);
-
-
-  char *goal = "The goal is simple - reach the top or bottom of the maze to win.";
-  Font(GLUT_BITMAP_TIMES_ROMAN_24, goal, 150, 375);
-
-  // Draw the button
-  ButtonDraw(&Start);
 }
 
 
@@ -342,9 +249,10 @@ void display(void)
 
   if (gameState == start) {
     drawStartScreen();
+    ButtonDraw(&Start);
   }
   else if (gameState == play) {
-    createChessboard();
+    createMaze();
     drawPlayer(103+xTranslation, 103+yTranslation, PLAYER_WIDTH);
   }
   glFlush();
