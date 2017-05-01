@@ -4,7 +4,7 @@
 
 This project includes several interactive implementations of procedural terrain generation algorithms in C and OpenGL.
 
-**2D Inifinite Maze Game**
+**Inifinite Maze Game**
 
 Attempt to escape this addicting maze at your own risk.  The game continually generates new rows as the player moves up and down the maze, showing how a seemingly infinite map can be created and stored with a small amount of memory.  Each new portion of the maze is created using the cellular automata maze generation model, which determines whether or not to fill cells based on the status of the surrounding cells.  User motion is provided through wasd keyboard control.
 
