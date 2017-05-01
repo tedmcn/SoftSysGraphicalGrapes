@@ -8,7 +8,7 @@
 
 static const int TILE_LEN = 10;
 static const int PLAYER_WIDTH = 4;
-static const int PLAYER_SPEED = 2;
+static const int SPEED = 2;
 static const int ORIGIN[2] = {-300, -290};
 static const int STARTING_ROW = 39;
 static const int STARTING_COL = 40;
@@ -312,9 +312,33 @@ void display(void)
   glFlush();
 }
 
+int getYCoorFromTrans(int trans, int isTop)
+{
+  switch (trans) {
+    case 7 ... 10:
+      return 40;
+    case 4 ... 6:
+      return 39 + isTop;
+    case -3 ... 3:
+      return 39;
+    case -6 ... -4:
+      return 38 + isTop;
+    case -10 ... -7:
+      return 38;
+    default:
+      return 39;
+  }
+}
+
 void processKeys(unsigned char key, int x, int y)
 {
-  int xCoor;
+  int lxCoor = (xTransAbs - PLAYER_WIDTH/2) / TILE_LEN;
+  int rxCoor = (xTransAbs + PLAYER_WIDTH/2) / TILE_LEN;
+  int tyCoor = getYCoorFromTrans(yTranslation, 1);
+  int byCoor = getYCoorFromTrans(yTranslation, 0);
+  int xCoorFuture;
+  int yCoorFuture;
+
   switch(key) {
     // ESC
     case 27:
@@ -325,30 +349,36 @@ void processKeys(unsigned char key, int x, int y)
       break;
     case 'w':
       // move up
-      glTranslatef(0.0, -(float) PLAYER_SPEED, 0.0);
-      yTranslation += PLAYER_SPEED;
+      yCoorFuture = getYCoorFromTrans(yTranslation + SPEED, 1);
+      if (alive_arr[yCoorFuture][lxCoor] == 1 && alive_arr[yCoorFuture][rxCoor] == 1) {
+        glTranslatef(0.0, -(float) SPEED, 0.0);
+        yTranslation += SPEED;
+      }
       break;
     case 's':
       // move down
-      glTranslatef(0.0, (float) PLAYER_SPEED, 0.0);
-      yTranslation -= PLAYER_SPEED;
+      yCoorFuture = getYCoorFromTrans(yTranslation - SPEED, 0);
+      if (alive_arr[yCoorFuture][lxCoor] == 1 && alive_arr[yCoorFuture][rxCoor] == 1) {
+        glTranslatef(0.0, (float) SPEED, 0.0);
+        yTranslation -= SPEED;
+      }
       break;
     case 'a':
       // move left
-      xCoor = (xTransAbs - (PLAYER_WIDTH/2) - PLAYER_SPEED) / TILE_LEN;
-      if (alive_arr[39][xCoor] == 1) {
-        glTranslatef((float) PLAYER_SPEED, 0.0, 0.0);
-        xTranslation -= PLAYER_SPEED;
-        xTransAbs -= PLAYER_SPEED;
+      xCoorFuture = (xTransAbs - (PLAYER_WIDTH/2) - SPEED) / TILE_LEN;
+      if (alive_arr[tyCoor][xCoorFuture] == 1 && alive_arr[byCoor][xCoorFuture] == 1) {
+        glTranslatef((float) SPEED, 0.0, 0.0);
+        xTranslation -= SPEED;
+        xTransAbs -= SPEED;
       }
       break;
     case 'd':
       // move right
-      xCoor = (xTransAbs + (PLAYER_WIDTH/2) + PLAYER_SPEED) / TILE_LEN;
-      if (alive_arr[39][xCoor] == 1) {
-        glTranslatef(-(float) PLAYER_SPEED, 0.0, 0.0);
-        xTranslation += PLAYER_SPEED;
-        xTransAbs += PLAYER_SPEED;
+      xCoorFuture = (xTransAbs + (PLAYER_WIDTH/2) + SPEED) / TILE_LEN;
+      if (alive_arr[tyCoor][xCoorFuture] == 1 && alive_arr[byCoor][xCoorFuture] == 1) {
+        glTranslatef(-(float) SPEED, 0.0, 0.0);
+        xTranslation += SPEED;
+        xTransAbs += SPEED;
       }
       break;
     default:
