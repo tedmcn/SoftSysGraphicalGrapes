@@ -49,7 +49,7 @@ Play the video below to see a demonstration of the interactive grass terrain.
 
 To create many blades of grass efficiently, our algorithm determines a target number of grass blades based on a sparseness parameter and creates a linked list where each node stores a list of characteristics for a single blade.  Each of these blades can then be rendered as many times as necessary until new blades with different parameters are desired.  In the simplest form, each blade is drawn as a cone with a width, height, color, and position.  As shown in the image below, a list of these cones can quickly be changed from a few simple drawings to a large field of semi-realistic grass blades.
 
-[![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_basic.png)](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_detail.png)
+[![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_detail.png)](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_detail.png)
 
 The previous drawings both show blades drawn evenly across the base plane.  In order to create a realistic position distribution for the grass, we use the [Box-Muller transform](https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform).  This transform samples pseudo-random numbers to generate normally distributed pairs of coordinates.  By changing the mean, standard deviation, and number of blades in this normal distribution, the scene can be drawn in a cluster pattern that closely mimics the natural clustering of grass in the real world as shown below.
 
