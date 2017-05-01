@@ -7,11 +7,16 @@
 #include "buttons.h"
 
 static const int TILE_LEN = 10;
+static const int PLAYER_WIDTH = 4;
+static const int PLAYER_SPEED = 2;
 static const int ORIGIN[2] = {-300, -290};
+static const int STARTING_ROW = 39;
+static const int STARTING_COL = 40;
 static const int ROWS = 80;
 static const int COLS = 80;
 int yTranslation = 0;
 int xTranslation = 0;
+int xTransAbs = (40 * 10) + 5; // (STARTING_COL * TILE_LEN) + (TILE_LEN/2)
 int alive_arr[80][80];
 int generations = 100;
 
@@ -302,14 +307,14 @@ void display(void)
   }
   else if (gameState == play) {
     createChessboard();
-    drawPlayer(103+xTranslation, 103+yTranslation, 4);
+    drawPlayer(103+xTranslation, 103+yTranslation, PLAYER_WIDTH);
   }
-
   glFlush();
 }
 
 void processKeys(unsigned char key, int x, int y)
 {
+  int xCoor;
   switch(key) {
     // ESC
     case 27:
@@ -320,23 +325,31 @@ void processKeys(unsigned char key, int x, int y)
       break;
     case 'w':
       // move up
-      glTranslatef(0.0, -2.0, 0.0);
-      yTranslation += 2;
+      glTranslatef(0.0, -(float) PLAYER_SPEED, 0.0);
+      yTranslation += PLAYER_SPEED;
       break;
     case 's':
       // move down
-      glTranslatef(0.0, 2.0, 0.0);
-      yTranslation -= 2;
+      glTranslatef(0.0, (float) PLAYER_SPEED, 0.0);
+      yTranslation -= PLAYER_SPEED;
       break;
     case 'a':
       // move left
-      glTranslatef(2.0, 0.0, 0.0);
-      xTranslation -= 2;
+      xCoor = (xTransAbs - (PLAYER_WIDTH/2) - PLAYER_SPEED) / TILE_LEN;
+      if (alive_arr[39][xCoor] == 1) {
+        glTranslatef((float) PLAYER_SPEED, 0.0, 0.0);
+        xTranslation -= PLAYER_SPEED;
+        xTransAbs -= PLAYER_SPEED;
+      }
       break;
     case 'd':
       // move right
-      glTranslatef(-2.0, 0.0, 0.0);
-      xTranslation += 2;
+      xCoor = (xTransAbs + (PLAYER_WIDTH/2) + PLAYER_SPEED) / TILE_LEN;
+      if (alive_arr[39][xCoor] == 1) {
+        glTranslatef(-(float) PLAYER_SPEED, 0.0, 0.0);
+        xTranslation += PLAYER_SPEED;
+        xTransAbs += PLAYER_SPEED;
+      }
       break;
     default:
       break;
