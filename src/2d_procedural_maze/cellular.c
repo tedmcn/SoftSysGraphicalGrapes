@@ -3,6 +3,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <GL/glut.h>
 #include "buttons.h"
 
@@ -348,6 +350,10 @@ void display(void)
   glFlush();
 }
 
+
+/*
+ * Convert y coordinate translation
+ */
 int getYCoorFromTrans(int trans, int isTop)
 {
   switch (trans) {
@@ -365,6 +371,7 @@ int getYCoorFromTrans(int trans, int isTop)
       return 39;
   }
 }
+
 
 /*
  * Check keys and track player motion for generating new rows
@@ -439,7 +446,6 @@ void processKeys(unsigned char key, int x, int y)
     // Reset translation count
     yTranslation = 0;
   }
-  printf("%d, %d\n", xTranslation, yTranslation);
 
   glutPostRedisplay();
 }
@@ -450,12 +456,9 @@ void processKeys(unsigned char key, int x, int y)
  */
 void MouseButton(int button, int state, int x, int y)
 {
-  printf("Mouse pressed\n");
   // update the mouse position
   TheMouse.x = x;
   TheMouse.y = y;
-  printf("%i\n", x);
-  printf("%i\n", y);
 
   if (state == GLUT_DOWN) 
   {
