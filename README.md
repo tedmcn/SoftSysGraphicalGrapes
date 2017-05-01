@@ -14,7 +14,7 @@ This interactive model allows users to change the parameters of a procedural gra
 
 **3D Infinite Maze Game**
 
-Short Description here
+This game is similar to the 2D infinite maze game, but drawn in three dimensions to explore camera control and more advanced user interactions in OpenGL.  
 
 **Project Website**
 
