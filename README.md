@@ -47,18 +47,16 @@ Play the video below to see a demonstration of the interactive grass terrain.
 
 Pictures / LL / Box-Muller
 
-![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_basic.png)
+![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_detail.png)
 
-![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_realistic.png)
-
-![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_gaussian.png)
-
-![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_clustered.png)
+![Loading Grass Image ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_distribution.png)
 
 
 ## Summary
 
-What we did
+In these two interactive graphics applications, we show two varieties of procedural graphics generation.  The infinite maze appears to be endless terrain to the user while taking only finite memory as it regenerates using cellular automata.  We also show an implementation of creating an appearance of realism through terrain variety parameters in both the appearance and distrubution algorithms used to draw the grass field.
+
+Conclusion here
 
 
 ## Project Information
