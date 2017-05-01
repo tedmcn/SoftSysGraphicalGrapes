@@ -315,6 +315,7 @@ int main(int argc, char **argv)
   int i;
   int j;
   int r;
+  srand(time(NULL));
   for (i = 0; i < ROWS; i++) {
     for (j = 0; j < COLS; j++) {
       r = rand() % 10;
