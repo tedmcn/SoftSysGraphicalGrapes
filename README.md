@@ -12,10 +12,6 @@ Attempt to escape this addicting maze at your own risk.  The game continually ge
 
 This interactive model allows users to change the parameters of a procedural grass generation algorithm and observe the effects on a drawn field of grass blades.  The algorithm generates each blade in the field based on height, width, and distribution sliders, and the position of each blade is determined using the Box-Muller algorithm, allowing a variety of distributions from gaussian to realistic clusters.  
 
-**3D Infinite Maze Game**
-
-This game is similar to the 2D infinite maze game, but drawn in three dimensions to explore camera control and more advanced user interactions in OpenGL.  
-
 **Project Website**
 
 For more background, demos, and implementation details, check out the project site [here](https://tedmcn.github.io/SoftSysGraphicalGrapes/).
@@ -38,11 +34,10 @@ $ sudo apt-get install freeglut3-dev freeglut3
 
 ### Compilation
 
-Each of the three directories in src contain an individual interactive game:
+Each of the following directories in src contain an individual interactive game:
 
 * `src/2d_procedural_maze`: A 2D infinite maze with wasd player control.
 * `src/interactive_grass_generation`: A terrain generation example with interactive parameters.
-* `src/3d_procedural_maze`: A 3D infinite maze with player mechanics.
 
 To build any of these games, run 
 
@@ -52,6 +47,8 @@ $ make all
 
 in the corresponding directory.
 
+There is also a `opengl_development` directory with a variety of mini development projects in opengl.  These can be used to provide resources for future implementations.
+
 
 ## Usage
 
@@ -59,7 +56,6 @@ Use the appropriate command below to run each game in its directory.
 
 * For 2d_procedural_maze: `$ ./2d_maze`
 * For interactive_grass_generation: `$ ./grass`
-* For 3d_procedural_maze: `$ ./3d_maze`
 
 Each of the project folders also contains the source code for the game, which is broken out into various api file that can be used for other implementations.  For example, the drawing functions for each maze as well as the sets of grass blades are separated into api files and can be imported into other applications.
 
