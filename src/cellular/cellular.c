@@ -234,7 +234,7 @@ void display(void)
 {
   glClear(GL_COLOR_BUFFER_BIT);
   createChessboard();
-  drawPlayer(103, 103+yTranslation, 4);
+  drawPlayer(103+xTranslation, 103+yTranslation, 4);
   glFlush();
 }
 
