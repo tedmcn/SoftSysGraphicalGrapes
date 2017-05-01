@@ -60,7 +60,6 @@ int getNeighborCount(row, col)
   count += alive_arr[row][col-1];
   count += alive_arr[row+1][col-1];
   count += alive_arr[row-1][col];
-  count += alive_arr[row][col];
   count += alive_arr[row+1][col];
   count += alive_arr[row-1][col+1];
   count += alive_arr[row][col+1];
