@@ -7,17 +7,17 @@
 ### Procedural Generation and Cellular Automata
 
 
-## Implementation
+## Implementation and Results
 
 ### Interactive 2D Maze Game
 
-![Loading Maze Game Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/reports/images/Selection_002.png "2D Infinite Maze Demo")
+![Loading Maze Game Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/maze_demo.gif "2D Infinite Maze Demo")
 
-![Loading Maze Generation Demo ...](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Maze Generation with Player Motion")
+![Loading Maze Generation Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/maze_generation.gif "Maze Generation with Player Motion")
 
 ### Interactive Grass Field
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Loading Interactive Grass Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/grass_demo.gif "Interactive Grass Demo")
 
 ### Interactive 3D Maze Game
 
