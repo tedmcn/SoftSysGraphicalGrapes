@@ -43,10 +43,10 @@ void createTile(int coord[], int alive) {
     glColor3f(0.0, 0.0, 0.0);
   }
   glBegin(GL_POLYGON);
-  glVertex2f(coord[0], coord[1]);
-  glVertex2f(coord[0] + TILE_LEN, coord[1]);
-  glVertex2f(coord[0] + TILE_LEN, coord[1] + TILE_LEN);
-  glVertex2f(coord[0], coord[1] + TILE_LEN);
+  glVertex3f(coord[0], coord[1], 0.0);
+  glVertex3f(coord[0] + TILE_LEN, coord[1], 0.0);
+  glVertex3f(coord[0] + TILE_LEN, coord[1] + TILE_LEN, 0.0);
+  glVertex3f(coord[0], coord[1] + TILE_LEN, 0.0);
   glEnd();
 }
 
@@ -218,10 +218,22 @@ void createChessboard() {
   }
 }
 
+void drawPlayer(int x, int y, int width) {
+  // Draw initial player position
+  glColor3f(1.0, 0.0, 0.0);
+  glBegin(GL_POLYGON);
+  glVertex3f(x, y, 1.0);
+  glVertex3f(x+width, y, 1.0);
+  glVertex3f(x+width, y+width, 1.0);
+  glVertex3f(x, y+width, 1.0);
+  glEnd();
+}
+
 void display(void)
 {
   glClear(GL_COLOR_BUFFER_BIT);
   createChessboard();
+  drawPlayer(103, 103+yTranslation, 4);
   glFlush();
 }
 
