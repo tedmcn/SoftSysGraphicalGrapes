@@ -328,6 +328,9 @@ int main(int argc, char **argv)
     advanceGeneration();
   }
 
+  // Make sure the player start tile is not a wall
+  alive_arr[39][40] = 1;
+
   glutDisplayFunc(display);
   glutMainLoop();
 
