@@ -11,7 +11,7 @@
 
 ### Interactive 2D Maze Game
 
-[![Loading Maze Game Demo ...](https://img.youtube.com/vi/link_here/0.jpg)](https://www.youtube.com/watch?v=link_here "2D Infinite Maze Demo")
+[![Loading Maze Game Demo ...](https://img.youtube.com/vi/LWTZEe8x_QY/0.jpg)](https://www.youtube.com/watch?v=LWTZEe8x_QY "2D Infinite Maze Demo")
 
 [![Loading Maze Generation Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](http://www.youtube.com/watch?v=PByjrMZ_-Mo "Maze Generation with Player Motion")
 
