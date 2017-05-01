@@ -1,4 +1,4 @@
-# SoftSys Team Graphical Grapes: Procedural Graphics Generation
+# Software Systems Team Graphical Grapes: Procedural Graphics Generation
 
 ## Description
 
