@@ -6,15 +6,15 @@ This project includes several interactive implementations of procedural terrain 
 
 **2D Inifinite Maze Game**
 
-Short Description Here
+Attempt to escape this addicting maze at your own risk.  The game continually generates new rows as the player moves up and down the maze, showing how a seemingly infinite map can be created and stored with a small amount of memory.  Each new portion of the maze is created using the cellular automata maze generation model, which determines whether or not to fill cells based on the status of the surrounding cells.  User motion is provided through wasd keyboard control.
 
 **Interactive Grass Field Generation**
 
-Short Description Here
+This interactive model allows users to change the parameters of a procedural grass generation algorithm and observe the effects on a drawn field of grass blades.  The algorithm generates each blade in the field based on height, width, and distribution sliders, and the position of each blade is determined using the Box-Muller algorithm, allowing a variety of distributions from gaussian to realistic clusters.  
 
 **3D Infinite Maze Game**
 
-Short Description here
+This game is similar to the 2D infinite maze game, but drawn in three dimensions to explore camera control and more advanced user interactions in OpenGL.  
 
 **Project Website**
 
