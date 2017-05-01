@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <GL/glut.h>
+#include "buttons.h"
 
 static const int TILE_LEN = 10;
 static const int ORIGIN[2] = {-300, -290};
@@ -16,6 +17,35 @@ int generations = 100;
 
 int topCut = 29;
 int bottomCut = 51;
+
+typedef enum State State;
+enum State {
+  start,
+  play
+};
+
+State gameState = start;
+
+
+/*
+ * Change the game state when the start button is pressed
+ */
+void startCallback() {
+  gameState = play;
+
+  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+
+  // Set viewing world with one top and bottom row outside of view
+  glOrtho(0.0, 200.0, 0.0, 200.0, -1.0, 1.0);
+
+  glutPostRedisplay();
+}
+
+// Create the start button and mouse objects
+struct Button Start = {325, 200, 100, 50, 0, "START", startCallback};
+struct Mouse TheMouse = {0, 0, 0, 0, 0};
 
 void createGrid(int rows, int cols) {
   glColor3f(0.0, 1.0, 0.0);
@@ -230,11 +260,51 @@ void drawPlayer(int x, int y, int width) {
   glEnd();
 }
 
+void drawStartScreen() {
+  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+
+  // Set viewing world with one top and bottom row outside of view
+  glOrtho(0.0, 750.0, 0.0, 750.0, -1.0, 1.0);
+
+  // Draw background
+  glColor3f(0.8, 0.8, 1.0);
+  glBegin(GL_POLYGON);
+  glVertex3f(0, 0, 0.0);
+  glVertex3f(750, 0, 0.0);
+  glVertex3f(750, 750, 0.0);
+  glVertex3f(0, 750, 0.0);
+  glEnd();
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  
+  char *title = "The Infinite Maze";
+
+  glColor3f(0.1, 0.3, 6.0);  
+  Font(GLUT_BITMAP_TIMES_ROMAN_24, title, 310, 500);
+
+
+  char *goal = "The goal is simple - reach the top or bottom of the maze to win.";
+  Font(GLUT_BITMAP_TIMES_ROMAN_24, goal, 150, 375);
+
+  // Draw the button
+  ButtonDraw(&Start);
+}
+
 void display(void)
 {
   glClear(GL_COLOR_BUFFER_BIT);
-  createChessboard();
-  drawPlayer(103+xTranslation, 103+yTranslation, 4);
+
+  if (gameState == start) {
+    drawStartScreen();
+  }
+  else if (gameState == play) {
+    createChessboard();
+    drawPlayer(103+xTranslation, 103+yTranslation, 4);
+  }
+
   glFlush();
 }
 
@@ -292,6 +362,58 @@ void processKeys(unsigned char key, int x, int y)
   glutPostRedisplay();
 }
 
+/* 
+ * Handle mouse press or release.
+ */
+void MouseButton(int button, int state, int x, int y)
+{
+  printf("Mouse pressed\n");
+  // update the mouse position
+  TheMouse.x = x;
+  TheMouse.y = y;
+  printf("%i\n", x);
+  printf("%i\n", y);
+
+  if (state == GLUT_DOWN) 
+  {
+    if ( !(TheMouse.lmb || TheMouse.mmb || TheMouse.rmb) ) {
+      TheMouse.xpress = x;
+      TheMouse.ypress = y;
+    }
+
+    // which button was pressed?
+    switch(button) 
+    {
+    case GLUT_LEFT_BUTTON:
+      TheMouse.lmb = 1;
+      ButtonPress(&Start, x, y);
+    case GLUT_MIDDLE_BUTTON:
+      TheMouse.mmb = 1;
+      break;
+    case GLUT_RIGHT_BUTTON:
+      TheMouse.rmb = 1;
+      break;
+    }
+  }
+  else 
+  {
+    // which button was released?
+    switch(button) 
+    {
+    case GLUT_LEFT_BUTTON:
+      TheMouse.lmb = 0;
+      ButtonRelease(&Start, x, y);
+      break;
+    case GLUT_MIDDLE_BUTTON:
+      TheMouse.mmb = 0;
+      break;
+    case GLUT_RIGHT_BUTTON:
+      TheMouse.rmb = 0;
+      break;
+    }
+  }
+}
+
 int main(int argc, char **argv)
 {
   glutInit(&argc, argv);
@@ -302,14 +424,6 @@ int main(int argc, char **argv)
   glutCreateWindow ("2D Procedural Maze");
 
   glutKeyboardFunc(processKeys);
-
-  glClearColor(0.0, 0.0, 0.0, 0.0);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  // Set viewing world with one top and bottom row outside of view
-  glOrtho(0.0, 200.0, 0.0, 200.0, -1.0, 1.0);
-  //glOrtho(0.0, 850.0, 0.0, 850.0, -1.0, 1.0);
 
   // Create initial maze
   int i;
@@ -331,6 +445,9 @@ int main(int argc, char **argv)
 
   // Make sure the player start tile is not a wall
   alive_arr[39][40] = 1;
+
+  // Check for mouse click
+  glutMouseFunc(MouseButton);
 
   glutDisplayFunc(display);
   glutMainLoop();
