@@ -11,13 +11,13 @@
 
 ### Interactive 2D Maze Game
 
-[![Loading Maze Game Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](https://www.youtube.com/watch?v=PByjrMZ_-Mo "2D Infinite Maze Demo")
+[![Loading Maze Game Demo ...](https://img.youtube.com/vi/link_here/0.jpg)](https://www.youtube.com/watch?v=link_here "2D Infinite Maze Demo")
 
-[![Loading Maze Generation Demo ...](https://img.youtube.com/vi/T-D1KVIuvjA/0.jpg)](http://www.youtube.com/watch?v=T-D1KVIuvjA "Maze Generation with Player Motion")
+[![Loading Maze Generation Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](http://www.youtube.com/watch?v=PByjrMZ_-Mo "Maze Generation with Player Motion")
 
 ### Interactive Grass Field
 
-[![Loading Interactive Grass Demo ...](https://img.youtube.com/vi/T-D1KVIuvjA/0.jpg)](http://www.youtube.com/watch?v=T-D1KVIuvjA "Interactive Grass Demo")
+[![Loading Interactive Grass Demo ...](https://img.youtube.com/vi/85TKIOZwD2o/0.jpg)](http://www.youtube.com/watch?v=85TKIOZwD2o "Interactive Grass Demo")
 
 ### Interactive 3D Maze Game
 
