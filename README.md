@@ -1,8 +1,10 @@
+This project includes interactive implementations of procedural terrain generation algorithms in C and OpenGL.  The first is a 2D infinite maze game, and the second is an interactive grass generation display.  This website provides demos and implementation details for each.
 
-
-This project includes interactive implementations of procedural terrain generation algorithms in C and OpenGL.
+To play the games or use the APIs that we have created, use the github link in the header and follow the instructions provided in the README.
 
 ## Background
+
+For both of the implementations described below, we use OpenGL to create the graphics and user interface.  Procedural generation algorithms and cellular automata are both incorporated as well.  The following section provides a brief background for each of these concepts.
 
 ### OpenGL
 
@@ -10,7 +12,7 @@ OpenGL is a cross-platform API used to render 2D and 3D graphics.  We implemente
 
 ### Procedural Generation and Cellular Automata
 
-Procedural generation in computer graphics means to generate textures and models algorithmically instead of manually. Modern games have been using procedural generation to generate complex game contents, and we choose maze generation as a basic implementation of this concept. 
+Procedural generation in computer graphics means to generate textures and models algorithmically instead of manually. Modern games have been using procedural generation to generate complex game content, and we choose terrain generation as a specific implementation of this concept. 
 
 Cellular Automaton (CA) is a discrete model that consists of a set of cells, where each cell has its own assigned state. A new generation is created when each cell changes its state based on its current state and the states of its neighbours following pre-defined rules. We implemented CA as our algorithm for maze generation and this algorithm enables the appearance of infinite procedural generation based our given set of rules.
 
