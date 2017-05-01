@@ -14,21 +14,24 @@ static const int STARTING_ROW = 39;
 static const int STARTING_COL = 40;
 static const int ROWS = 80;
 static const int COLS = 80;
+
+// Init cellular array and position parameters
 int yTranslation = 0;
 int xTranslation = 0;
 int xTransAbs = (40 * 10) + 5; // (STARTING_COL * TILE_LEN) + (TILE_LEN/2)
 int alive_arr[80][80];
 int generations = 100;
 
+// Set window view refresh rows
 int topCut = 29;
 int bottomCut = 51;
 
+// Store the state of the game 
 typedef enum State State;
 enum State {
   start,
   play
 };
-
 State gameState = start;
 
 
@@ -52,6 +55,10 @@ void startCallback() {
 struct Button Start = {325, 200, 100, 50, 0, "START", startCallback};
 struct Mouse TheMouse = {0, 0, 0, 0, 0};
 
+
+/*
+ * Draw the background grid to place cells within
+ */
 void createGrid(int rows, int cols) {
   glColor3f(0.0, 1.0, 0.0);
   glLineWidth(10);
@@ -71,6 +78,10 @@ void createGrid(int rows, int cols) {
   glEnd();
 }
 
+
+/*
+ * Draw an individual tile within the set grid
+ */
 void createTile(int coord[], int alive) {
   // Fill in grid square
   if (alive) {
@@ -86,6 +97,10 @@ void createTile(int coord[], int alive) {
   glEnd();
 }
 
+
+/*
+ * Determine the number of live neighbors around a given cell
+ */
 int getNeighborCount(int row, int col)
 {
   int count = 0;
@@ -139,6 +154,10 @@ void advanceRow(int row) {
   }
 }
 
+
+/*
+ * Advance one generation over the entire grid
+ */
 void advanceGeneration()
 {
   int i;
@@ -168,6 +187,8 @@ void advanceGeneration()
 
 /*
  * Create a new row at either the top or the bottom of the maze
+ * 
+ * Also refreshes all cells above or below the viewing window
  * 
  * Input: direction - 0 if top, 1 if bottom
  */
@@ -239,6 +260,9 @@ void createRow(int direction)
 }
 
 
+/*
+ * Draw the grid and tiles of the maze
+ */
 void createChessboard() {
   int coord[2];
   int i;
@@ -254,6 +278,10 @@ void createChessboard() {
   }
 }
 
+
+/*
+ * Draw the player square at a given position
+ */
 void drawPlayer(int x, int y, int width) {
   // Draw initial player position
   glColor3f(1.0, 0.0, 0.0);
@@ -265,6 +293,10 @@ void drawPlayer(int x, int y, int width) {
   glEnd();
 }
 
+
+/*
+ * Draw the start screen with instructions
+ */
 void drawStartScreen() {
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glMatrixMode(GL_PROJECTION);
@@ -298,6 +330,10 @@ void drawStartScreen() {
   ButtonDraw(&Start);
 }
 
+
+/*
+ * Display the game or start screen depending on the game state
+ */
 void display(void)
 {
   glClear(GL_COLOR_BUFFER_BIT);
@@ -312,6 +348,10 @@ void display(void)
   glFlush();
 }
 
+
+/*
+ * Check keys and track player motion for generating new rows
+ */
 void processKeys(unsigned char key, int x, int y)
 {
   int xCoor;
@@ -375,6 +415,7 @@ void processKeys(unsigned char key, int x, int y)
   glutPostRedisplay();
 }
 
+
 /* 
  * Handle mouse press or release.
  */
@@ -427,6 +468,10 @@ void MouseButton(int button, int state, int x, int y)
   }
 }
 
+
+/*
+ * Create the viewing window, initial maze state, and initial maze
+ */
 int main(int argc, char **argv)
 {
   glutInit(&argc, argv);
