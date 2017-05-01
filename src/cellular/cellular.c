@@ -76,16 +76,16 @@ int getNeighborCount(int row, int col)
  * Input: direction - 0 if top, 1 if bottom
  */
 void advanceRow(int direction) {
-	int row;
-	if (direction == 0) {
-		row = 0;
-	}
-	else {
-		row = 19;
-	}
-	int j;
-	for (j = 0; j < COLS; j++) {
-	  // survive if you have 1-5 neighbors
+  int row;
+  if (direction == 0) {
+    row = 0;
+  }
+  else {
+    row = 19;
+  }
+  int j;
+  for (j = 0; j < COLS; j++) {
+    // survive if you have 1-5 neighbors
     // create if you have 3 neighbors
     int neighbors = getNeighborCount(row,j);
     if (alive_arr[row][j]) {
@@ -101,7 +101,7 @@ void advanceRow(int direction) {
         alive_arr[row][j] = 1;
       }
     }
-	}
+  }
 }
 
 void advanceGeneration()
@@ -138,38 +138,38 @@ void advanceGeneration()
  */
 void createRow(int direction)
 {
-	// If top: shift all rows down one, generate new top row
-	if (direction == 1) {
-		int i;
-		for (i = 20; i > 0; i--) {
-			int a;
-			for (a = 0; a < COLS; a++) {
-				alive_arr[i][a] = alive_arr[i-1][a];
-			}
-		}
-		int x;
-		for (x = 0; x < COLS; x++) {
-			alive_arr[0][x] = 0;
-		}
-		advanceRow(0);
-		glTranslatef(0.0, -TILE_LEN, 0.0);
-	}
-	// If bottom: shift all rows up one, generate new bottom row
-	else {
-		int j;
-		for (j = 0; j < 20; j++) {
-			int b;
-			for (b = 0; b < COLS; b++) {
-				alive_arr[j][b] = alive_arr[j+1][b];
-			}
-		}
-		int y;
-		for (y = 0; y < COLS; y++) {
-			alive_arr[19][y] = 0;
-		}
-		advanceRow(1);
-		glTranslatef(0.0, TILE_LEN, 0.0);
-	}
+  // If top: shift all rows down one, generate new top row
+  if (direction == 1) {
+    int i;
+    for (i = 20; i > 0; i--) {
+      int a;
+      for (a = 0; a < COLS; a++) {
+        alive_arr[i][a] = alive_arr[i-1][a];
+      }
+    }
+    int x;
+    for (x = 0; x < COLS; x++) {
+      alive_arr[0][x] = 0;
+    }
+    advanceRow(0);
+    glTranslatef(0.0, -TILE_LEN, 0.0);
+  }
+  // If bottom: shift all rows up one, generate new bottom row
+  else {
+    int j;
+    for (j = 0; j < 20; j++) {
+      int b;
+      for (b = 0; b < COLS; b++) {
+        alive_arr[j][b] = alive_arr[j+1][b];
+      }
+    }
+    int y;
+    for (y = 0; y < COLS; y++) {
+      alive_arr[19][y] = 0;
+    }
+    advanceRow(1);
+    glTranslatef(0.0, TILE_LEN, 0.0);
+  }
 }
 
 
@@ -231,20 +231,20 @@ void processKeys(unsigned char key, int x, int y)
 
   // Check if we've translated enough to create a new row
   if (yTranslation == TILE_LEN) {
-  	// Create new row on top
-  	printf("Create top row.\n");
-  	createRow(0);
+    // Create new row on top
+    printf("Create top row.\n");
+    createRow(0);
 
-  	// Reset translation count
-  	yTranslation = 0;
+    // Reset translation count
+    yTranslation = 0;
   }
   else if (yTranslation == (-TILE_LEN)) {
-  	// Create new row on bottom
-  	printf("Create bottom row.\n");
-  	createRow(1);
+    // Create new row on bottom
+    printf("Create bottom row.\n");
+    createRow(1);
 
-  	// Reset translation count
-  	yTranslation = 0;
+    // Reset translation count
+    yTranslation = 0;
   }
 
   glutPostRedisplay();
@@ -271,7 +271,7 @@ int main(int argc, char **argv)
   // Create initial maze
   int i;
   for (i = 0; i < 40; i++) {
-  	advanceGeneration();
+    advanceGeneration();
   }
 
   glutDisplayFunc(display);
