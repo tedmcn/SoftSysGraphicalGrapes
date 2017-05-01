@@ -11,13 +11,13 @@
 
 ### Interactive 2D Maze Game
 
-![Loading Maze Game Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/maze_demo.gif "2D Infinite Maze Demo")
+![Loading Maze Game Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/maze_demo.gif "2D Infinite Maze Demo")
 
-![Loading Maze Generation Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/maze_generation.gif "Maze Generation with Player Motion")
+![Loading Maze Generation Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/maze_generation.gif "Maze Generation with Player Motion")
 
 ### Interactive Grass Field
 
-![Loading Interactive Grass Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/master/images/grass_demo.gif "Interactive Grass Demo")
+![Loading Interactive Grass Demo ...](https://github.com/tedmcn/SoftSysGraphicalGrapes/blob/gh-pages/images/grass_demo.gif "Interactive Grass Demo")
 
 ### Interactive 3D Maze Game
 
