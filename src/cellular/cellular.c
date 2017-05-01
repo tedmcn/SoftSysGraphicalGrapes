@@ -10,6 +10,7 @@ static const int ORIGIN[2] = {-300, -290};
 static const int ROWS = 80;
 static const int COLS = 80;
 int yTranslation = 0;
+int xTranslation = 0;
 int alive_arr[80][80];
 int generations = 100;
 
@@ -250,20 +251,22 @@ void processKeys(unsigned char key, int x, int y)
     case 'w':
       // move up
       glTranslatef(0.0, -2.0, 0.0);
-      yTranslation = yTranslation + 2;
+      yTranslation += 2;
       break;
     case 's':
       // move down
       glTranslatef(0.0, 2.0, 0.0);
-      yTranslation = yTranslation - 2;
+      yTranslation -= 2;
       break;
     case 'a':
       // move left
       glTranslatef(2.0, 0.0, 0.0);
+      xTranslation -= 2;
       break;
     case 'd':
       // move right
       glTranslatef(-2.0, 0.0, 0.0);
+      xTranslation += 2;
       break;
     default:
       break;
@@ -284,6 +287,7 @@ void processKeys(unsigned char key, int x, int y)
     // Reset translation count
     yTranslation = 0;
   }
+  printf("%d, %d\n", xTranslation, yTranslation);
 
   glutPostRedisplay();
 }
