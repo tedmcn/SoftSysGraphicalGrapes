@@ -12,8 +12,9 @@
 //IE A vector of values {0,1,0} is representing straight up because
 //From the origin {0,0,0} to {0,1,0} is a move of 1 up in the y direction.
 //
-//More complex vectors can be represented with coordinates further from the origin
-//such as {1,2,0} (x=2y graph) which is different from {1,1,0} (which is x=y graph)
+//More complex vectors can be represented with coordinates further 
+// from the origin such as {1,2,0} (x=2y graph) which is different from 
+// {1,1,0} (which is x=y graph)
 
 #include <stdlib.h> 
 #include <stdio.h>
@@ -85,17 +86,20 @@ Vectorobject Vectorobject::average(Vectorobject v){
     return new_v;
 }
 
-//Distributes the vector equally over 1000
 
 Vectorobject Vectorobject::distribute(){
-    float sum = (get()[0]+get()[2])/10000;
+    float sum = get()[0]+get()[2];
     if(sum<0){
         sum=sum*-1;
+    }
+    if(sum==0){
+
     }
     float coords[3]={get()[0]/sum,
                     0,
                     get()[2]/sum};
     Vectorobject new_v = Vectorobject(coords);
+    print();
     return new_v;
 }
 

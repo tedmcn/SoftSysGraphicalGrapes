@@ -4,7 +4,8 @@
 
 
  *Main entry point for program
- *Runs a simulation of a ball falling onto a flat plane with a little bounce-back
+ *Runs a simulation of a ball falling onto a flat plane with a 
+ *little bounce-back
 */
 
 #include <GL/glut.h>
@@ -19,7 +20,8 @@
 #include "playerobject.h"
 
 
-//Create the sphere and plane globally since they are needed throughout the whole simulation
+//Create the sphere and plane globally since they are needed 
+// throughout the whole simulation
 float plane_normal[]={0,1,0};
 float plane_scale[]={100,.1,100};
 float plane_rotate[]={0,0,0};
@@ -31,6 +33,7 @@ float player_starting_coords[]={0,10,1};
 float player_starting_direction[]={1,0,0};
 Playerobject player;
 
+bool inputBuffer[256];
 
 //Used for resizing the window if it changes
 //
@@ -49,7 +52,8 @@ static void resize(int width, int height)
 } 
  
 
-//This function is used on every frame, it is used to draw the 3d environment onto the screen
+//This function is used on every frame, it is used to draw the 
+// 3d environment onto the screen
 static void display(void)
 { 
     //Clear the previous image
@@ -60,7 +64,8 @@ static void display(void)
     glLoadIdentity();
 
     //Set the camera
-    //First set of 3 is coords of eye, second set of 3 is where it is looking, 3rd is normal
+    //First set of 3 is coords of eye, second set of 3 is where it is looking, 
+    // 3rd is normal
     player.look();
 
     //Draw in red
@@ -86,40 +91,46 @@ static void display(void)
     //Execute the input and make sure you are not clipping into a wall
     //Apply 
     player.handel(p);
+
+    //Apply all the user inputs in the buffer
+    int i;
+    for(i=0;i<256;i++){
+        if(inputBuffer[i]==true){
+            switch(i){
+                case 'w':
+                case 'a':
+                case 's':
+                case 'd':
+                    player.move(i);
+                    break;
+                case 'r':
+                    //Command to switch cell the user is standing on
+                    break;
+                case ' ':
+                    player.jump();
+                    break;
+                case 'j':
+                    player.rotateLeft();
+                    break;
+                case 'l':
+                    player.rotateRight();
+                    break;
+                case 27:
+                    printf("\nUser exited\n");
+                    exit(0);
+            }
+        }
+    }
 } 
 
-void keyboard_input(unsigned char Key, int x, int y){
-    switch(Key){
-        case 'w':
-        case 'a':
-        case 's':
-        case 'd':
-            player.move(Key);
-            break;
-        case 'r':
-            //Command to switch cell the user is standing on
-            break;
-        case 27:
-            printf("\nUser exited\n");
-            exit(0);
-    }
+//When a player presses a key add it to the buffer
+void keyboard_input(unsigned char key, int x, int y){
+    inputBuffer[key]=true;
 }
-
-void specialInput(int key, int x, int y){
-    switch(key){
-        case GLUT_KEY_LEFT:
-        player.setD(player.getD().rotate_clockwise(-5).get());
-            break;
-
-        case GLUT_KEY_RIGHT:
-        player.setD(player.getD().rotate_clockwise(5).get());
-            break;
-        
-        default:
-            break;
-    }
+//When the player releases the key remove it from the buffer
+void keyboard_up(unsigned char key, int x, int y){
+    inputBuffer[key]=false;
 }
-
 
 //Create lights 
     const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -190,9 +201,9 @@ int main(int argc, char *argv[])
     //When the program is idle run display
     glutIdleFunc(display);
 
-    //
+    //Tell OpenGL what keyboard functions we need to listen for
     glutKeyboardFunc(keyboard_input);
-    glutSpecialFunc(specialInput);
+    glutKeyboardUpFunc(keyboard_up);
 
     //Empty void function
     glutMainLoop(); 
