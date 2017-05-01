@@ -121,13 +121,30 @@ void processKeys(unsigned char key, int x, int y)
     // ESC
     case 27:
       exit(0);
-    case 'd':
+    case 32:
       // move forward one generation
       advanceGeneration();
+      break;
+    case 'w':
+      // move up
+      glTranslatef(0.0, -1.0, 0.0);
+      break;
+    case 's':
+      // move down
+      glTranslatef(0.0, 1.0, 0.0);
+      break;
+    case 'a':
+      // move left
+      glTranslatef(1.0, 0.0, 0.0);
+      break;
+    case 'd':
+      // move right
+      glTranslatef(-1.0, 0.0, 0.0);
       break;
     default:
       break;
   }
+
   glutPostRedisplay();
 }
 
