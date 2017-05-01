@@ -4,9 +4,10 @@
 #include <GL/glut.h>
 
 static const int TILE_LEN = 10;
-static const int ORIGIN[2] = {10, 10};
+static const int ORIGIN[2] = {5, -10};
 static const int ROWS = 20;
 static const int COLS = 20;
+int yTranslation = 0;
 int alive_arr[20][20] = {  
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -22,6 +23,7 @@ int alive_arr[20][20] = {
 
 void createGrid(int rows, int cols) {
   glColor3f(0.0, 1.0, 0.0);
+  glLineWidth(10);
   glBegin(GL_LINES);
   int r;
   int c;
@@ -53,7 +55,7 @@ void createTile(int coord[], int alive) {
   glEnd();
 }
 
-int getNeighborCount(row, col)
+int getNeighborCount(int row, int col)
 {
   int count = 0;
 
@@ -76,6 +78,41 @@ int getNeighborCount(row, col)
   }
 
   return count;
+}
+
+
+/*
+ * Fill in the cells in the top or bottom row
+ * 
+ * Input: direction - 0 if top, 1 if bottom
+ */
+void advanceRow(int direction) {
+  int row;
+  if (direction == 0) {
+    row = 0;
+  }
+  else {
+    row = 19;
+  }
+  int j;
+  for (j = 0; j < COLS; j++) {
+    // survive if you have 1-5 neighbors
+    // create if you have 3 neighbors
+    int neighbors = getNeighborCount(row,j);
+    if (alive_arr[row][j]) {
+      // This is alive
+      if (neighbors < 1 || neighbors > 5) {
+        // Die
+        alive_arr[row][j] = 0;
+      }
+    } else {
+      // This is dead
+      if (neighbors == 3) {
+        // Create
+        alive_arr[row][j] = 1;
+      }
+    }
+  }
 }
 
 void advanceGeneration()
@@ -103,6 +140,49 @@ void advanceGeneration()
     }
   }
 }
+
+
+/*
+ * Create a new row at either the top or the bottom of the maze
+ * 
+ * Input: direction - 0 if top, 1 if bottom
+ */
+void createRow(int direction)
+{
+  // If top: shift all rows down one, generate new top row
+  if (direction == 1) {
+    int i;
+    for (i = 20; i > 0; i--) {
+      int a;
+      for (a = 0; a < COLS; a++) {
+        alive_arr[i][a] = alive_arr[i-1][a];
+      }
+    }
+    int x;
+    for (x = 0; x < COLS; x++) {
+      alive_arr[0][x] = 0;
+    }
+    advanceRow(0);
+    glTranslatef(0.0, -TILE_LEN, 0.0);
+  }
+  // If bottom: shift all rows up one, generate new bottom row
+  else {
+    int j;
+    for (j = 0; j < 20; j++) {
+      int b;
+      for (b = 0; b < COLS; b++) {
+        alive_arr[j][b] = alive_arr[j+1][b];
+      }
+    }
+    int y;
+    for (y = 0; y < COLS; y++) {
+      alive_arr[19][y] = 0;
+    }
+    advanceRow(1);
+    glTranslatef(0.0, TILE_LEN, 0.0);
+  }
+}
+
 
 void createChessboard() {
   int coord[2];
@@ -132,13 +212,52 @@ void processKeys(unsigned char key, int x, int y)
     // ESC
     case 27:
       exit(0);
-    case 'd':
+    case 32:
       // move forward one generation
       advanceGeneration();
+      break;
+    case 'w':
+      // move up
+      glTranslatef(0.0, -1.0, 0.0);
+      yTranslation++;
+      printf("%i\n", yTranslation);
+      break;
+    case 's':
+      // move down
+      glTranslatef(0.0, 1.0, 0.0);
+      yTranslation--;
+      printf("%i\n", yTranslation);
+      break;
+    case 'a':
+      // move left
+      glTranslatef(1.0, 0.0, 0.0);
+      break;
+    case 'd':
+      // move right
+      glTranslatef(-1.0, 0.0, 0.0);
       break;
     default:
       break;
   }
+
+  // Check if we've translated enough to create a new row
+  if (yTranslation == TILE_LEN) {
+    // Create new row on top
+    printf("Create top row.\n");
+    createRow(0);
+
+    // Reset translation count
+    yTranslation = 0;
+  }
+  else if (yTranslation == (-TILE_LEN)) {
+    // Create new row on bottom
+    printf("Create bottom row.\n");
+    createRow(1);
+
+    // Reset translation count
+    yTranslation = 0;
+  }
+
   glutPostRedisplay();
 }
 
@@ -148,15 +267,23 @@ int main(int argc, char **argv)
   glutInitDisplayMode ( GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 
   glutInitWindowPosition(100,100);
-  glutInitWindowSize(300,300);
-  glutCreateWindow ("Chessboard");
+  glutInitWindowSize(1000, 750);
+  glutCreateWindow ("2D Procedural Maze");
 
   glutKeyboardFunc(processKeys);
 
-  glClearColor(0.0, 0.0, 0.0, 0.0);         // black background
-  glMatrixMode(GL_PROJECTION);              // setup viewing projection
-  glLoadIdentity();                           // start with identity matrix
-  glOrtho(0.0, 250.0, 0.0, 250.0, -1.0, 1.0);   // setup a 10x10x2 viewing world
+  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+
+  // Set viewing world with one top and bottom row outside of view
+  glOrtho(0.0, 210.0, 0.0, 180.0, -1.0, 1.0);
+
+  // Create initial maze
+  int i;
+  for (i = 0; i < 40; i++) {
+    advanceGeneration();
+  }
 
   glutDisplayFunc(display);
   glutMainLoop();
