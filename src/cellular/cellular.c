@@ -56,14 +56,25 @@ void createTile(int coord[], int alive) {
 int getNeighborCount(row, col)
 {
   int count = 0;
-  count += alive_arr[row-1][col-1];
-  count += alive_arr[row][col-1];
-  count += alive_arr[row+1][col-1];
-  count += alive_arr[row-1][col];
-  count += alive_arr[row+1][col];
-  count += alive_arr[row-1][col+1];
-  count += alive_arr[row][col+1];
-  count += alive_arr[row+1][col+1];
+
+  // Check previous row
+  if (row > 0) {
+    if (col > 0) count += alive_arr[row-1][col-1];
+    count += alive_arr[row-1][col];
+    if (col+1 < COLS) count += alive_arr[row-1][col+1];
+  }
+
+  // Check up and down the current row
+  if (col > 0) count += alive_arr[row][col-1];
+  if (col+1 < COLS) count += alive_arr[row][col+1];
+
+  // Check next row
+  if (row+1 < ROWS) {
+    if (col > 0) count += alive_arr[row+1][col-1];
+    count += alive_arr[row+1][col];
+    if (col+1 < COLS) count += alive_arr[row+1][col+1];
+  }
+
   return count;
 }
 
