@@ -1,25 +1,20 @@
-/* Chessboard Drawing - All corrds from bottom left */
+/*  
+ * 2D Maze Game - Procedurally generated using cellular automata
+ */
 
 #include <stdio.h>
 #include <GL/glut.h>
 
 static const int TILE_LEN = 10;
-static const int ORIGIN[2] = {5, -10};
-static const int ROWS = 20;
-static const int COLS = 20;
+static const int ORIGIN[2] = {-300, -290};
+static const int ROWS = 80;
+static const int COLS = 80;
 int yTranslation = 0;
-int alive_arr[20][20] = {  
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
+int alive_arr[80][80];
+int generations = 100;
+
+int topCut = 29;
+int bottomCut = 51;
 
 void createGrid(int rows, int cols) {
   glColor3f(0.0, 1.0, 0.0);
@@ -86,14 +81,7 @@ int getNeighborCount(int row, int col)
  * 
  * Input: direction - 0 if top, 1 if bottom
  */
-void advanceRow(int direction) {
-  int row;
-  if (direction == 0) {
-    row = 0;
-  }
-  else {
-    row = 19;
-  }
+void advanceRow(int row) {
   int j;
   for (j = 0; j < COLS; j++) {
     // survive if you have 1-5 neighbors
@@ -151,34 +139,65 @@ void createRow(int direction)
 {
   // If top: shift all rows down one, generate new top row
   if (direction == 1) {
+    // Shift all rows down
     int i;
-    for (i = 20; i > 0; i--) {
+    for (i = ROWS; i > 0; i--) {
       int a;
       for (a = 0; a < COLS; a++) {
         alive_arr[i][a] = alive_arr[i-1][a];
       }
     }
+    // Create new top row
     int x;
+    int r;
     for (x = 0; x < COLS; x++) {
-      alive_arr[0][x] = 0;
+      r = rand() % 10;
+      if (r == 5) {
+        alive_arr[0][x] = 1;
+      }
+      else {
+        alive_arr[0][x] = 0;
+      }
     }
-    advanceRow(0);
+    // Run for generations to reset
+    for (i = 0; i < generations; i++) {
+      int a;
+      for (a = topCut; a >= 0; a--) {
+        advanceRow(a);
+      }
+    }
     glTranslatef(0.0, -TILE_LEN, 0.0);
   }
+
   // If bottom: shift all rows up one, generate new bottom row
   else {
+    // Shift all rows up
     int j;
-    for (j = 0; j < 20; j++) {
+    for (j = 0; j < ROWS; j++) {
       int b;
       for (b = 0; b < COLS; b++) {
         alive_arr[j][b] = alive_arr[j+1][b];
       }
     }
+    // Create new bottom row
     int y;
+    int r;
     for (y = 0; y < COLS; y++) {
-      alive_arr[19][y] = 0;
+      r = rand() % 10;
+      if (r == 5) {
+        alive_arr[ROWS-1][y] = 1;
+      }
+      else {
+        alive_arr[ROWS-1][y] = 0;
+      }
     }
-    advanceRow(1);
+    // Run for generations to reset
+    for (j = 0; j < generations; j++) {
+      int b;
+      for (b = bottomCut; b < ROWS; b++) {
+        advanceRow(b);
+      }
+    }
     glTranslatef(0.0, TILE_LEN, 0.0);
   }
 }
@@ -218,23 +237,21 @@ void processKeys(unsigned char key, int x, int y)
       break;
     case 'w':
       // move up
-      glTranslatef(0.0, -1.0, 0.0);
-      yTranslation++;
-      printf("%i\n", yTranslation);
+      glTranslatef(0.0, -2.0, 0.0);
+      yTranslation = yTranslation + 2;
       break;
     case 's':
       // move down
-      glTranslatef(0.0, 1.0, 0.0);
-      yTranslation--;
-      printf("%i\n", yTranslation);
+      glTranslatef(0.0, 2.0, 0.0);
+      yTranslation = yTranslation - 2;
       break;
     case 'a':
       // move left
-      glTranslatef(1.0, 0.0, 0.0);
+      glTranslatef(2.0, 0.0, 0.0);
       break;
     case 'd':
       // move right
-      glTranslatef(-1.0, 0.0, 0.0);
+      glTranslatef(-2.0, 0.0, 0.0);
       break;
     default:
       break;
@@ -243,7 +260,6 @@ void processKeys(unsigned char key, int x, int y)
   // Check if we've translated enough to create a new row
   if (yTranslation == TILE_LEN) {
     // Create new row on top
-    printf("Create top row.\n");
     createRow(0);
 
     // Reset translation count
@@ -251,7 +267,6 @@ void processKeys(unsigned char key, int x, int y)
   }
   else if (yTranslation == (-TILE_LEN)) {
     // Create new row on bottom
-    printf("Create bottom row.\n");
     createRow(1);
 
     // Reset translation count
@@ -277,11 +292,23 @@ int main(int argc, char **argv)
   glLoadIdentity();
 
   // Set viewing world with one top and bottom row outside of view
-  glOrtho(0.0, 210.0, 0.0, 180.0, -1.0, 1.0);
+  glOrtho(0.0, 200.0, 0.0, 200.0, -1.0, 1.0);
+  //glOrtho(0.0, 850.0, 0.0, 850.0, -1.0, 1.0);
 
   // Create initial maze
   int i;
-  for (i = 0; i < 40; i++) {
+  int j;
+  int r;
+  for (i = 0; i < ROWS; i++) {
+    for (j = 0; j < COLS; j++) {
+      r = rand() % 10;
+      if (r == 5) {
+        alive_arr[i][j] = 1;
+      } 
+    }
+  }
+
+  for (i = 0; i < 1000; i++) {
     advanceGeneration();
   }
 
