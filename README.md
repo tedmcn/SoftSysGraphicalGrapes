@@ -8,6 +8,10 @@ This project includes several interactive implementations of procedural terrain 
 
 Attempt to escape this addicting maze at your own risk.  The game continually generates new rows as the player moves up and down the maze, showing how a seemingly infinite map can be created and stored with a small amount of memory.  Each new portion of the maze is created using the cellular automata maze generation model, which determines whether or not to fill cells based on the status of the surrounding cells.  User motion is provided through wasd keyboard control.
 
+**3D Maze Game**
+
+Based on the work in the 2D game mentioned above, this 3D maze allows a player to explore a cellular automata in 3D space in order to achieve better understanding of how CA's work and operate step by step. The player can walk around the grid and press 'k' to advance the CA one step, he can also press the space bar to jump in order to get a better top-down view of the CA. Careful though; if a cell turns on while standing on top of it the player will be trapped inside the cell.
+
 **Interactive Grass Field Generation**
 
 This interactive model allows users to change the parameters of a procedural grass generation algorithm and observe the effects on a drawn field of grass blades.  The algorithm generates each blade in the field based on height, width, and distribution sliders, and the position of each blade is determined using the Box-Muller algorithm, allowing a variety of distributions from gaussian to realistic clusters.  
