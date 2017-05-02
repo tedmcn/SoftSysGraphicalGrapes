@@ -88,7 +88,7 @@ Vectorobject Vectorobject::average(Vectorobject v){
 
 
 Vectorobject Vectorobject::distribute(){
-    float sum = get()[0]+get()[2];
+    float sum = (get()[0]+get()[2])/10;
     if(sum<0){
         sum=sum*-1;
     }
@@ -99,7 +99,7 @@ Vectorobject Vectorobject::distribute(){
                     0,
                     get()[2]/sum};
     Vectorobject new_v = Vectorobject(coords);
-    print();
+    // print();
     return new_v;
 }
 

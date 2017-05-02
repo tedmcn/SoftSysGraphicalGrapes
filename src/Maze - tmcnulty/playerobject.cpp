@@ -70,11 +70,13 @@ void Playerobject::move(char Key){
 	switch(Key){
 		//Forward
         case 'w':
-        	getA().add(getD().distribute());
+        	setV(getD().distribute().get());
+        	// getA().add(getD().distribute());
             break;
         //Strafe left
         case 'a':
-        	getA().add(getD().rotate_clockwise(-180).distribute());
+        	setV(getD().distribute().rotate_clockwise(-180).get());
+        	// getA().add(getD().rotate_clockwise(-180).distribute());
             break;
         // Backward
         case 's': 
@@ -82,7 +84,8 @@ void Playerobject::move(char Key){
         	break; 
        	//  Strafe Right
         case 'd':
-            getA().add(getD().rotate_clockwise(180).distribute());
+        	setV(getD().distribute().rotate_clockwise(180).get());
+            // getA().add(getD().rotate_clockwise(180).distribute());
             break;
         default:
         	break;
@@ -91,13 +94,13 @@ void Playerobject::move(char Key){
 
 //Modifies the player's direction to rotate the camera
 void Playerobject::rotateLeft(){
-    setD(getD().rotate_clockwise(-.05).get());
+    setD(getD().rotate_clockwise(-.25).get());
     // getD().print();
 }
 
 //Modifies the player's direction to rotate the camera
 void Playerobject::rotateRight(){
-    setD(getD().rotate_clockwise(.05).get());
+    setD(getD().rotate_clockwise(.25).get());
     // getD().print();
 }
 

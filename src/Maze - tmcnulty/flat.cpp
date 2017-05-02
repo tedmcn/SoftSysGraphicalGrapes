@@ -9,6 +9,7 @@
 */
 
 #include <GL/glut.h>
+#include <time.h>
 #include <stdlib.h> 
 #include <stdio.h>
 
@@ -24,23 +25,31 @@
 Bill's Work
 */
 
-static const int TILE_LEN = 10;
-static const int ORIGIN[2] = {10, 10};
 static const int ROWS = 20;
 static const int COLS = 20;
-int alive_arr[20][20] = {  
-   {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+static const int SIZE = 30;
+int alive_arr[ROWS][COLS] = {  
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
-
 
 int getNeighborCount(int row, int col)
 {
@@ -85,14 +94,13 @@ void advanceGeneration()
 }
 
 
-
 /*
     Ted's Work
 */
 
 void drawMaze(){
     float cube_n[]={0,1,0};
-    float cube_s[]={5,100,5};
+    float cube_s[]={SIZE,SIZE,SIZE};
     float floor_s[]={cube_s[0],0.1,cube_s[2]};
     float cube_r[]={0,0,0};
     int i;
@@ -101,13 +109,15 @@ void drawMaze(){
         for (j = 0; j < COLS; j++) {
             if(alive_arr[i][j]==1){
                 Planeobject p = Planeobject(cube_n, cube_s, cube_r);
-                float cube_p[]= {i*cube_s[0], 0, j*cube_s[2]};
+                float cube_p[]= {i-(1/2)*SIZE, 0, j-(1/2)*SIZE};
                 p.setP(cube_p);
+                glColor3d(0,0,0.3);
                 p.draw();
             }else{
                 Planeobject p = Planeobject(cube_n, floor_s, cube_r);
-                float cube_p[]= {i*cube_s[0], 0, j*cube_s[2]};
+                float cube_p[]= {i-(1/2)*SIZE, 0, j-(1/2)*SIZE};
                 p.setP(cube_p);
+                glColor3d(0,0.2,0);
                 p.draw();
             }
         }
@@ -116,12 +126,6 @@ void drawMaze(){
 
 
 
-//Create the sphere and plane globally since they are needed 
-// throughout the whole simulation
-float plane_normal[]={0,1,0};
-float plane_scale[]={100,.1,100};
-float plane_rotate[]={0,0,0};
-Planeobject plane=Planeobject(plane_normal, plane_scale, plane_rotate);
 Physics p;
 
 //Player object which will work as the camera and take user input
@@ -176,12 +180,34 @@ static void display(void)
     //Check player input for next frame
     player.checkForInput();
 
+
+    //Save the player position
+    float old_p[] = {player.getP()[0], player.getP()[1],player.getP()[2]};
+
     //Execute the input and make sure you are not clipping into a wall
     //Apply 
     player.handel(p);
 
-    //Apply all the user inputs in the buffer
+    //Check to see if the player walked into the walls
+    float new_p[] = {player.getP()[0], player.getP()[1],player.getP()[2]};
+
     int i;
+    int j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            if((i*SIZE)-(0.5*SIZE)-5 < new_p[0] && new_p[0]<(i*SIZE)+(0.5*SIZE)+5){
+                if(j*SIZE-(0.5*SIZE)-5 < new_p[2] && new_p[2]<(j*SIZE)+(0.5*SIZE)+5){
+                    if(alive_arr[i][j]==1){
+                        printf("%i - %i | %f - %f \n", i,j, player.getP()[0], player.getP()[2]);
+                        player.setP(old_p);
+                    }
+                } 
+            }
+        }
+    }
+
+
+    //Apply all the user inputs in the buffer
     for(i=0;i<256;i++){
         if(inputBuffer[i]==true){
             switch(i){
@@ -239,9 +265,18 @@ void keyboard_up(unsigned char key, int x, int y){
  
 int main(int argc, char *argv[])
 {
+
+    srand(time(NULL));
+    int x;
+    for(x=0;x<50;x++){
+        alive_arr[rand()%20][rand()%20]=1;
+    }
+
     player = Playerobject();
     player.setP(player_starting_coords);
     player.setD(player_starting_direction);
+
+
 
 
 
@@ -251,12 +286,6 @@ int main(int argc, char *argv[])
     glutInitWindowPosition(10,10);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH); 
  
-    //Define the location of the objects
-    GLfloat sphere_coordinates[] = {0,10,0};
-    GLfloat plane_coordinates[] = {0,0,0};
-
-    //Put the sphere and plane in the correct position
-    plane.setP(plane_coordinates);
 
     //Create the window
     glutCreateWindow("Physics"); 
