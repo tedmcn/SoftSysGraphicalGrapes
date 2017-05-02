@@ -56,12 +56,19 @@ Play the video below to see a demonstration of the full game.
 **Controls**
 
 W- Forward
+
 S- Backward
+
 A- Strafe Left
+
 D- Strafe Right
+
 J- Look Left
+
 L- Look Right
+
 k- Advance the CA
+
 " "- Jump
 
 
