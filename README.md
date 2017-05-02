@@ -37,7 +37,9 @@ $ sudo apt-get install freeglut3-dev freeglut3
 Each of the following directories in src contain an individual interactive game:
 
 * `src/2d_procedural_maze`: A 2D infinite maze with wasd player control.
+* `src/3d_procedural_maze`: A 3D, exporable maze constructed with a Cellular Automata.
 * `src/interactive_grass_generation`: A terrain generation example with interactive parameters.
+
 
 To build any of these games, run 
 
@@ -55,6 +57,7 @@ There is also a `opengl_development` directory with a variety of mini developmen
 Use the appropriate command below to run each game in its directory.
 
 * For 2d_procedural_maze: `$ ./2d_maze`
+* For 3d_procedural_maze: `$ ./3d_maze`
 * For interactive_grass_generation: `$ ./grass`
 
 Each of the project folders also contains the source code for the game, which is broken out into various api file that can be used for other implementations.  For example, the drawing functions for each maze as well as the sets of grass blades are separated into api files and can be imported into other applications.
