@@ -44,6 +44,28 @@ The video below shows the zoomed out viewing frame with the full maze shifting a
 
 [![Loading Maze Generation Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](http://www.youtube.com/watch?v=PByjrMZ_-Mo "Maze Generation with Player Motion")
 
+### 3D Maze Game
+
+**Overview**
+
+This game which is based on the work done in the 2D version, aims to provide a tool for students to better understand and visualize Cellular Automata. The original goal of this 3D version was to create a game in which a maze consistantly is generated infront of the player regardless of how far from the starting point they are. However, a fundamental issue with this is that when the CA would generate a new row the tile the player is standing on may need to be swapped, and in the case where that happens the player gets stuck in a wall with no way out. To remedy this problem, we changed the controls of the game such that they player chooses when the CA will advance by pressing the 'k' key. This way, the user has total control over how fast the CA adavances so that they can fully understand one step before moving onto the next.
+
+Play the video below to see a demonstration of the full game.
+
+[![Loading Maze Game Demo ...](https://img.youtu.be/b5bxTZT8aWk/0.jpg)](https://youtu.be/b5bxTZT8aWk "3D Maze Demo")
+
+**Implementation**
+
+In order to create the illusion of an infinite maze, the player viewing window is focused in on a specific portion of the much larger maze.  Every time the player moves up or down a cell, the entire maze moves down, generating a new randomly seeded row at the top or bottom.  The player view then moves to prevent the shift of the maze from being visible as the new row pushes the old up or down.  Every row above or below the viewing window is also run through many generations of the cellular automata to ensure that the new row causes as much of the maze to fill in as possible.
+
+The cellular automata rules we used is the ["Maze"](http://www.conwaylife.com/w/index.php?title=Maze) ruleset.  Cells are born if they have 3 neighbors, and survive if they have 1-5 neighbors.
+
+To limit movement of the player, we had to detect if the player would walk into a wall with every keypress.  To do this, we keep track of the x and y position of the center of the player at all times.  Using these positions and the width of the player, we can calculate which cells the player is currently occupying and which cells they would occupy after a movement.  If a movement keypress causes the player to occupy a cell that is a wall, we block the movement.
+
+The video below shows the zoomed out viewing frame with the full maze shifting and regenerating as the user moves up and down.
+
+[![Loading Maze Generation Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](http://www.youtube.com/watch?v=PByjrMZ_-Mo "Maze Generation with Player Motion")
+
 ### Interactive Grass Generation
 
 **Overview**
