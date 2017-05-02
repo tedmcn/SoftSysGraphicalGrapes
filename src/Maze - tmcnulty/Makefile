@@ -1,5 +1,5 @@
-flat: flat.cpp gameobject.cpp gameobject.h physics.cpp physics.h planeobject.cpp planeobject.h sphereobject.cpp sphereobject.h vectorobject.cpp vectorobject.h playerobject.cpp playerobject.h
-	g++ -o flat vectorobject.cpp physics.cpp planeobject.cpp gameobject.cpp sphereobject.cpp playerobject.cpp flat.cpp -lglut -lGLU -lGL -lm
+3d_maze: 3d_maze.cpp gameobject.cpp gameobject.h physics.cpp physics.h planeobject.cpp planeobject.h sphereobject.cpp sphereobject.h vectorobject.cpp vectorobject.h playerobject.cpp playerobject.h
+	g++ -o 3d_maze vectorobject.cpp physics.cpp planeobject.cpp gameobject.cpp sphereobject.cpp playerobject.cpp 3d_maze.cpp -lglut -lGLU -lGL -lm
 
 # TODO 
 # MAKE THIS BETTER
