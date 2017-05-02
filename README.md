@@ -51,20 +51,31 @@ The video below shows the zoomed out viewing frame with the full maze shifting a
 This game which is based on the work done in the 2D version, aims to provide a tool for students to better understand and visualize Cellular Automata. The original goal of this 3D version was to create a game in which a maze consistantly is generated infront of the player regardless of how far from the starting point they are. However, a fundamental issue with this is that when the CA would generate a new row the tile the player is standing on may need to be swapped, and in the case where that happens the player gets stuck in a wall with no way out. To remedy this problem, we changed the controls of the game such that they player chooses when the CA will advance by pressing the 'k' key. This way, the user has total control over how fast the CA adavances so that they can fully understand one step before moving onto the next.
 
 Play the video below to see a demonstration of the full game.
-
 [![Loading Maze Game Demo ...](https://img.youtu.be/b5bxTZT8aWk/0.jpg)](https://youtu.be/b5bxTZT8aWk "3D Maze Demo")
+
+**Controls**
+
+W- Forward
+S- Backward
+A- Strafe Left
+D- Strafe Right
+J- Look Left
+L- Look Right
+k- Advance the CA
+" "- Jump
+
 
 **Implementation**
 
-In order to create the illusion of an infinite maze, the player viewing window is focused in on a specific portion of the much larger maze.  Every time the player moves up or down a cell, the entire maze moves down, generating a new randomly seeded row at the top or bottom.  The player view then moves to prevent the shift of the maze from being visible as the new row pushes the old up or down.  Every row above or below the viewing window is also run through many generations of the cellular automata to ensure that the new row causes as much of the maze to fill in as possible.
+There are a few steps in order to create this 3D version of the maze game. First, we have to correct the camera's. This is accomplished by creating a Player absraction which can hold dedicated information about the player such as his position, his acceleration, and other variables needed for movement. Typically in OpenGL you would set the camera's position and where it was looking with:
+``glutLookAt()``
+However, this function takes in 9 paramerers such as the player's normal vector, the player's position and the player's direction. We wrapped this in a look() function which loads the needed parameters from the player object's variables. This helps us achieve a viewport which is accurately being changed as the player moves the camera. Furthermore, it creates a convenient, organized way for us to handel the many variables we will need.
 
-The cellular automata rules we used is the ["Maze"](http://www.conwaylife.com/w/index.php?title=Maze) ruleset.  Cells are born if they have 3 neighbors, and survive if they have 1-5 neighbors.
+The second step is to map the CA to a constant location within the OpenGL enviornment. In other words, we want the top-left most edge of the CA to be at 0,0 and we want it to always be at 0,0 regareless of whether the user moved or if that tile has changed. This is accomplished directly drawing the maze from the CA every frame. It is typical OpenGL convention to save, in structures, objects that you need to draw frame after frame while only modifying their values every frame. However, in this situation that would require a lot of overhead as each wall (tile of the CA) would need to have their position, scale, rotation, and normal vector saved. In order to avoid saving all this information we draw each tile seperately every frame (as it doesn't slow us down noticeably). 
 
-To limit movement of the player, we had to detect if the player would walk into a wall with every keypress.  To do this, we keep track of the x and y position of the center of the player at all times.  Using these positions and the width of the player, we can calculate which cells the player is currently occupying and which cells they would occupy after a movement.  If a movement keypress causes the player to occupy a cell that is a wall, we block the movement.
-
-The video below shows the zoomed out viewing frame with the full maze shifting and regenerating as the user moves up and down.
-
-[![Loading Maze Generation Demo ...](https://img.youtube.com/vi/PByjrMZ_-Mo/0.jpg)](http://www.youtube.com/watch?v=PByjrMZ_-Mo "Maze Generation with Player Motion")
+Lastly, we need to implement user controls as well as collision detection to make sure that the player doesn't walking into the walls of the maze. OpenGL provides some handy tools to handel user input:
+`` glutKeyboardFunc(keyboard_input);glutKeyboardUpFunc(keyboard_up);``
+In order to allow a user to input multiple commands at once we add each pressed key to a buffer (This is done by glutKeyboardFunc). Once a key is released it is removed from the buffer by glutKeyboardUpFunc. Every frame, the program will check the buffer and apply the command of every key in the buffer which in turn allows a user to run foward and jump at the same time, or rotate the camera left and walk backwards. If this were implemented in another way, the user would need to stop walking forward (pressing w) in order to jump (press " ").
 
 ### Interactive Grass Generation
 
