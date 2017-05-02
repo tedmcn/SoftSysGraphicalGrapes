@@ -4,9 +4,9 @@
 
 This project includes several interactive implementations of procedural terrain generation algorithms in C and OpenGL.
 
-**Infinite Maze Game**
+**2D Infinite Maze Game**
 
-Attempt to escape this addicting maze at your own risk.  In this experiment, we created a game in which the user tries to navigate and escape a procedurally generated maze. Although this is not a particularly fun game, it can certainly help students learning about CA's to get a better understanding as you can explore the cellular automata in 3D space and have control over when each step of the CA happens. Currently, we limited the size of the maze to a 20x20 grid to minimize computational time, however this can easily be expanded to a larger grid.
+Attempt to escape this addicting maze at your own risk.  The game continually generates new rows as the player moves up and down the maze, showing how a seemingly infinite map can be created and stored with a small amount of memory.  Each new portion of the maze is created using the cellular automata maze generation model, which determines whether or not to fill cells based on the status of the surrounding cells.  User motion is provided through wasd keyboard control.
 
 **Interactive Grass Field Generation**
 
