@@ -1,7 +1,8 @@
 This project includes interactive implementations of procedural terrain generation algorithms in C and OpenGL.  
 
 * The first is a 2D infinite maze game.
-* The second is an interactive grass generation display.  
+* The second is a 3D maze game.
+* The third is an interactive grass generation display.  
 
 This website provides demos and implementation details for each.  To play the games or use the APIs that we have created, use the github link in the header and follow the instructions provided in the README.
 
@@ -109,7 +110,7 @@ Overall, this model allows users to explore the ways that procedural algorithms 
 
 ## Summary
 
-In these two interactive graphics applications, we show two varieties of procedural graphics generation.  The infinite maze appears to be endless terrain to the user while taking only finite memory as it regenerates using cellular automata.  We also show an implementation of creating an appearance of realism through terrain variety parameters in both the appearance and distribution algorithms used to draw the grass field.
+In these three interactive graphics applications, we show two varieties of procedural graphics generation.  The infinite maze appears to be endless terrain to the user while taking only finite memory as it regenerates using cellular automata.  We also show an implementation of creating an appearance of realism through terrain variety parameters in both the appearance and distribution algorithms used to draw the grass field.
 
 Both of the interactive examples as well as the drawing apis that we have created can be used to better understand procedural graphics generation and create new projects and implementations.
 
