@@ -51,7 +51,7 @@ The video below shows the zoomed out viewing frame with the full maze shifting a
 This game which is based on the work done in the 2D version, aims to provide a tool for students to better understand and visualize Cellular Automata. The original goal of this 3D version was to create a game in which a maze consistantly is generated infront of the player regardless of how far from the starting point they are. However, a fundamental issue with this is that when the CA would generate a new row the tile the player is standing on may need to be swapped, and in the case where that happens the player gets stuck in a wall with no way out. To remedy this problem, we changed the controls of the game such that they player chooses when the CA will advance by pressing the 'k' key. This way, the user has total control over how fast the CA adavances so that they can fully understand one step before moving onto the next.
 
 Play the video below to see a demonstration of the full game.
-[![Loading Maze Game Demo ...](https://img.youtu.be/b5bxTZT8aWk/0.jpg)](https://youtu.be/b5bxTZT8aWk "3D Maze Demo")
+[![Loading Maze Game Demo ...](https://i.ytimg.com/vi/b5bxTZT8aWk/hqdefault.jpg)](https://youtu.be/b5bxTZT8aWk "3D Maze Demo")
 
 **Controls**
 
