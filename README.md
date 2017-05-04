@@ -1,5 +1,7 @@
 # Software Systems Team Graphical Grapes: Procedural Graphics Generation
 
+## Haozheng Du, Kathryn Hite, Ted McNulty, Bill Wong
+
 ## Description
 
 This project includes several interactive implementations of procedural terrain generation algorithms in C and OpenGL.
